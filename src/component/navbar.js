@@ -1,9 +1,39 @@
-function Navbar(props) {
-    
+import useOuterClick from "../utils/useOuterClick";
+import "../App.css";
+import React, { useState } from "react";
+import logo from "../assets/logo2.png";
+import {
+  FiUser,
+  FiSearch,
+  FiShoppingCart,
+  FiHeart,
+  FiPlus,
+} from "react-icons/fi";
 
-    return (
-        <>
-             <section className="navbar">
+export default function Navbar(props) {
+  const [mobileNav, setmobileNav] = useState(false);
+  const [searchToggler, setsearchToggler] = useState(false);
+  const [searchTerm, setsearchTerm] = useState("");
+
+  const innerRef = useOuterClick((ev) => {
+    if (mobileNav) {
+      setmobileNav(false);
+    }
+  });
+  const searchRef = useOuterClick((ev) => {
+    if (searchToggler) {
+      setsearchToggler(false);
+    }
+  });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    setsearchTerm("");
+  };
+
+  return (
+    <>
+      <div className="navbar">
         <div
           className="hamburger"
           onClick={() => {
@@ -38,7 +68,7 @@ function Navbar(props) {
               placeholder="search..."
               style={{ background: "#e8e8e8", border: "none", outline: "none" }}
             ></input>
-            <FiSearch size={"1.5em"} />
+            <FiSearch size={"1.5em"} strokeWidth={"1"} />
           </li>
           {/* phone search */}
           <li
@@ -46,78 +76,82 @@ function Navbar(props) {
             onClick={() => {
               setsearchToggler(!searchToggler);
             }}
-           
           >
-          <span className='responsive-icon' >  <FiSearch size={"1.5em"} style={{cursor:"pointer"}} /></span>
-          
+            <span className="responsive-icon">
+              {" "}
+              <FiSearch
+                size={"1.5em"}
+                style={{ cursor: "pointer" }}
+                strokeWidth={"1"}
+              />
+            </span>
           </li>
           <form
-              className={
-                searchToggler
-                  ? "search-input-container hide-sm-search show-sm-search"
-                  : "search-input-container hide-sm-search"
-              }
-             ref={searchRef}
-             onSubmit={handleSubmit}
-            >
-              <input
-                placeholder="search..."
-                style={{
-                  background: "#e8e8e8",
-                  border: "none",
-                  outline: "none",
-                }}
-                value={searchTerm}
-                onChange={(e) => {setsearchTerm(e.target.value)}}
-               
-              ></input>
-            </form>
+            className={
+              searchToggler
+                ? "search-input-container hide-sm-search show-sm-search"
+                : "search-input-container hide-sm-search"
+            }
+            ref={searchRef}
+            onSubmit={handleSubmit}
+          >
+            <input
+              placeholder="search..."
+              style={{
+                background: "#e8e8e8",
+                border: "none",
+                outline: "none",
+              }}
+              value={searchTerm}
+              onChange={(e) => {
+                setsearchTerm(e.target.value);
+              }}
+            ></input>
+          </form>
           <li className="nav-item">
-            <span className='responsive-icon'>
-              <FiUser size={"1.5em"} />
+            <span className="responsive-icon">
+              <FiUser size={"1.5em"} strokeWidth={"1"} />
             </span>
-          
           </li>
           <li className="nav-item hideWishList">
-            <span className='responsive-icon'>
-              <FiHeart size={"1.5em"} />
+            <span className="responsive-icon">
+              <FiHeart size={"1.5em"} strokeWidth={"1"} />
             </span>
             <span className="count">0</span>
           </li>
           <li className="nav-item">
-            <span className='responsive-icon'>
-              <FiShoppingCart size={"1.5em"} />
+            <span className="responsive-icon">
+              <FiShoppingCart size={"1.5em"} strokeWidth={"1"} />
             </span>
             <span className="count">0</span>
           </li>
         </ul>
-       
-      </section>
-       {/* burger navbar */}
-       <div
-          className={
-            mobileNav
-              ? "mobile-nav-container"
-              : "mobile-nav-container hidemobileNav"
-          }
+      </div>
+      {/* burger navbar */}
+      <div
+        className={
+          mobileNav
+            ? "mobile-nav-container"
+            : "mobile-nav-container hidemobileNav"
+        }
+      >
+        <ul
+          className={mobileNav ? "mobile-nav" : "mobile-nav hidemobile"}
+          ref={innerRef}
         >
-          <ul
-            className={mobileNav ? "mobile-nav" : "mobile-nav hidemobile"}
-            ref={innerRef}
-          >
-            <header className="mobile-nav-item">
-              Welcome Guest{" "}
-              <span className="close" style={{ paddingRight: "16px" }}>
-                <FiPlus size={"1.5em"} />
-              </span>
-            </header>
-            <li className="mobile-nav-item">Men</li>
-            <li className="mobile-nav-item">Women</li>
-            <li className="mobile-nav-item">Accesories</li>
-            <li className="mobile-nav-item">Contact</li>
-            <li className="mobile-nav-item">About Us</li>
-          </ul>
-        </div>
-        </>
-    )
+          <header className="mobile-nav-item">
+            Welcome Guest{" "}
+            <span className="close" style={{ paddingRight: "16px" }}>
+              <FiPlus size={"1.5em"} />
+            </span>
+          </header>
+          <li className="mobile-nav-item">Men</li>
+          <li className="mobile-nav-item">Women</li>
+          <li className="mobile-nav-item">Accesories</li>
+          <li className="mobile-nav-item">Contact</li>
+          <li className="mobile-nav-item">About Us</li>
+        </ul>
+      </div>
+    </>
+  );
 }

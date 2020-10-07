@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import pic1 from "../assets/products/model-1-1.jpg";
-import pic2 from "../assets/products/model-1-2.jpg";
 import { FiShoppingCart, FiHeart } from "react-icons/fi";
 
-export function Product(props) {
-  const [cartstate, setcartstate] = useState(false)
-  const [wishliststate, setwishliststate] = useState(false)
+export default function Product(props) {
+  const [cartstate, setcartstate] = useState(false);
+  const [wishliststate, setwishliststate] = useState(false);
   return (
     <div className="product-container">
       <div className="image-container">
-        <img src={pic1} />
+        <img src={pic1} alt="" />
         <div className="hover-card">
           <span className="icon">
             <FiHeart />
@@ -22,13 +21,25 @@ export function Product(props) {
           </span>{" "}
           <span className="card-name">Add To Cart </span>
         </div>
-     
+
         <div className="hover-card-mob">
-          <span className={wishliststate?" icon-mob icon-mob-clicked ": "icon-mob"} onClick={() => {setwishliststate(!wishliststate)}}>
+          <span
+            className={
+              wishliststate ? " icon-mob icon-mob-clicked " : "icon-mob"
+            }
+            onClick={() => {
+              setwishliststate(!wishliststate);
+            }}
+          >
             <FiHeart />
           </span>
-          <span className={cartstate?" icon-mob icon-mob-clicked ": "icon-mob"} onClick={() => {setcartstate(!cartstate)}}>
-          <FiShoppingCart />
+          <span
+            className={cartstate ? " icon-mob icon-mob-clicked " : "icon-mob"}
+            onClick={() => {
+              setcartstate(!cartstate);
+            }}
+          >
+            <FiShoppingCart />
           </span>
         </div>
       </div>
