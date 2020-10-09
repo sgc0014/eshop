@@ -3,6 +3,9 @@
   margin-right: 50px;
   margin-left: 50px;
 }
+a{
+  text-decoration: none;
+}
 section {
   margin: 40px 0;
 }
@@ -46,6 +49,7 @@ section {
   padding: 0 10px;
   font-family: "Poppins-Regular";
   cursor: pointer;
+  color: black;
 }
 .nav-item:hover {
   color: #45b7f3;
@@ -92,7 +96,7 @@ section {
     margin-top: 4px;
   }
   .mobile-nav-container {
-    position: absolute;
+    position: fixed;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -484,6 +488,9 @@ section {
     width: 80px;
     height: 80px;
   }
+  .service-info{
+    font-size: 13px;
+  }
 }
 /* footer */
 footer {
@@ -517,6 +524,9 @@ footer {
 .col-body > div {
   display: flex;
 }
+.vertical-line{
+  display: none;
+}
 
 .newsletter-input > input {
   padding: 6px;
@@ -544,6 +554,10 @@ footer {
     padding: 10px 10px;
     margin-right: -10px;
     margin-left: -10px;
+  }
+  .vertical-line {
+    border: .5px solid #b9b7b7;
+    height: 15px;
   }
 
   .col-3-4 {

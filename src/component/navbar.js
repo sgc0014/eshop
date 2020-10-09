@@ -9,6 +9,7 @@ import {
   FiHeart,
   FiPlus,
 } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
 export default function Navbar(props) {
   const [mobileNav, setmobileNav] = useState(false);
@@ -45,13 +46,25 @@ export default function Navbar(props) {
           <div className="line3"></div>
         </div>
         <header className="brand-name">
-          <img src={logo} alt="" />
+        <Link to='/'><img src={logo} alt="" /></Link>  
         </header>
         <ul className="first-part-nav nav-items">
-          <li className=" nav-item">Men</li>
-          <li className=" nav-item">Women</li>
-          <li className=" nav-item">Accesories</li>
-          <li className=" nav-item">Contact</li>
+          <Link to="/men">
+            {" "}
+            <li className=" nav-item"> Men </li>
+          </Link>
+          <Link to="/women">
+            {" "}
+            <li className=" nav-item">Women</li>
+          </Link>
+          <Link to="/accesories">
+            {" "}
+            <li className=" nav-item">Accesories</li>
+          </Link>
+          <Link to="/contact">
+            {" "}
+            <li className=" nav-item">Contact</li>
+          </Link>
         </ul>
         <ul className="second-part-nav nav-items">
           <li
