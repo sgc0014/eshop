@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
-export function Dropdown(props) {
+export function Dropdown({options,header}) {
     const [dropdownState, setdropdownState] = useState(false);
-    const [dropdownOptionState,setdropdownOptionState] = useState({})
-
-
+    const [selectedItem, setselectedItem] = useState({})
+    
+    const selected = (e) =>{
+     const item = e.target.value
+     setselectedItem({...selectedItem,
+     
+     })
+     console.log(selectedItem)
+    }
     return (
         <section className="filter-dropdown">
         <header
@@ -13,8 +19,8 @@ export function Dropdown(props) {
           onClick={() => {
             setdropdownState(!dropdownState);
           }}
-        >{console.log(dropdownOptionState)}
-          <span>{props.header}</span>
+        >
+          <span>{header}</span>
           {dropdownState ? (
             <span >
               <IoIosArrowDown className="open" />
@@ -32,8 +38,8 @@ export function Dropdown(props) {
               : "dropdown-options dropdown-options-hide"
           }
         >
-            {props.options.map(option => (
-          <li className="option" >{option}</li>      
+            {options.map(option => (
+          <li className="option" value={option} onClick={(e) => selected(e)} >{option}</li>      
             ))}
          
         </ul>

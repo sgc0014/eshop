@@ -53,11 +53,11 @@ export default function Navbar(props) {
             {" "}
             <li className=" nav-item"> Men </li>
           </Link>
-          <Link to="/women">
+          <Link to="/men">
             {" "}
             <li className=" nav-item">Women</li>
           </Link>
-          <Link to="/accesories">
+          <Link to="/men">
             {" "}
             <li className=" nav-item">Accesories</li>
           </Link>

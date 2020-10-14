@@ -6,6 +6,9 @@
 a{
   text-decoration: none;
 }
+img{
+  object-fit: cover;
+}
 section {
   margin: 40px 0;
 }
@@ -35,7 +38,7 @@ section {
   top: 4px;
   max-width: 280px;
 }
-.brand-name > img {
+.brand-name> a > img {
   width: 100%;
 }
 .nav-items {
@@ -68,6 +71,9 @@ section {
 }
 .hide-sm-search {
   display: none;
+}
+.hamburger {
+display: none;
 }
 
 @media screen and (max-width: 992px) {
@@ -183,8 +189,8 @@ section {
     font-size: 14px;
   }
   .brand-name {
-    top: 12px;
     width: 90px;
+    top: 13px;
   }
   .line1 {
     width: 20px;
@@ -206,8 +212,8 @@ section {
 
 @media screen and (max-width: 370px) {
   .brand-name {
-    top: 15px;
     width: 71px;
+    top: 13px;
   }
 }
 
@@ -234,6 +240,7 @@ section {
   width: 100%;
   height: 100%;
   transition: 0.4s;
+  display: block;
 }
 .category > img:hover {
   transform: scale(1.1);
@@ -278,9 +285,11 @@ section {
 /* trending */
 
 .trending-body {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  grid-column-gap: 20px;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+	grid-column-gap: 20px;
+	grid-row-gap: 15px;
+	margin-bottom: 20px;
 }
 .trending-container > header {
   display: flex;
@@ -312,16 +321,14 @@ section {
 
 @media screen and (max-width: 630px) {
   .trending-body {
-    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
   }
 }
 @media screen and (max-width: 530px) {
   .trending-body {
     grid-template-columns: repeat(2, 1fr);
   }
-  .icon-mob {
-    font-size: 9px;
-  }
+  
 }
 /* product */
 .product-container {
@@ -338,6 +345,7 @@ section {
   width: 100%;
   height: 100%;
   transition: 0.5s;
+  display: block;
 }
 .image-container > img:hover {
   opacity: 0.7;
@@ -390,6 +398,7 @@ section {
 .product-name {
   margin-bottom: 0;
   font-size: 14px;
+  text-transform: capitalize;
 }
 .product-price {
   color: #999292;
@@ -424,21 +433,24 @@ section {
   color: #fff;
   transition: 0.5s;
 }
-
-@media screen and (max-width: 770px) {
+@media screen and (max-width: 1024px) {
+  .hover-card-mob {
+    display: flex;
+  }
   .hover-card {
     z-index: -10000;
     opacity: 0;
   }
-  .hover-card-mob {
-    display: flex;
-  }
 
+
+}
+@media screen and (max-width: 770px) {
+ 
   .header-line {
     width: 20px;
   }
   .product-container {
-    max-width: 200px !important;
+    max-width: 200px ;
   }
   .product-name,
   .product-price {
@@ -448,7 +460,7 @@ section {
 
 @media screen and (max-width: 630px) {
   .product-container {
-    max-width: 190px !important;
+    max-width: 165px;
   }
 }
 

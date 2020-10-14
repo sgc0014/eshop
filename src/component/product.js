@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import pic1 from "../assets/products/model-1-1.jpg";
 import { FiShoppingCart, FiHeart } from "react-icons/fi";
 
 export default function Product(props) {
   const [cartstate, setcartstate] = useState(false);
   const [wishliststate, setwishliststate] = useState(false);
+  const {price,name,img} = props;
   return (
     <div className="product-container">
-      <div className="image-container">
-        <img src={pic1} alt="" />
+      <div className="image-container" >
+        <img src={`/products/${img}`} alt="" />
         <div className="hover-card">
           <span className="icon">
             <FiHeart />
@@ -43,8 +43,8 @@ export default function Product(props) {
           </span>
         </div>
       </div>
-      <p className="product-name">Young design short sleeve tshirt</p>
-      <p className="product-price">Rs.500</p>
+      <div className="product-name">{name}</div>
+      <div className="product-price">Rs.{price}</div>
     </div>
   );
 }
