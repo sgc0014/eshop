@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { } from "react-icons/io";
 import { Dropdown } from "../component/dropDown";
 import Product from "../component/product";
 import "./men.css";
@@ -7,6 +7,51 @@ import "./men.css";
 
 export function Men(props) {
   const [productList, setproductList] = useState([
+    {
+      name: "full sleeve tshirt",
+      price: 500,
+      img:"product1.jpg"
+    },
+    {
+      name: "short sleeve tshirt",
+      price: 600,
+      img:"product2.jpg"
+    },
+    {
+      name: " tshirt",
+      price: 300,
+      img:"product3.jpg"
+    },
+    {
+      name: "full sleeve tshirt",
+      price: 500,
+      img:"product1.jpg"
+    },
+    {
+      name: "short sleeve tshirt",
+      price: 600,
+      img:"product2.jpg"
+    },
+    {
+      name: " tshirt",
+      price: 300,
+      img:"product3.jpg"
+    },
+    {
+      name: "full sleeve tshirt",
+      price: 500,
+      img:"product1.jpg"
+    },
+    {
+      name: "short sleeve tshirt",
+      price: 600,
+      img:"product2.jpg"
+    },
+    {
+      name: " tshirt",
+      price: 300,
+      img:"product3.jpg"
+    },
     {
       name: "full sleeve tshirt",
       price: 500,

@@ -38,6 +38,11 @@
 section .filter-dropdown{
     margin: 17px 0 ;
 }
+.filter-container{
+    max-height: 450px;
+    overflow-y: scroll;
+    
+}
 .filter-header{
     text-transform: uppercase;
     font-size: 13px;

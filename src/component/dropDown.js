@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import React, { useState } from "react";
+import { IoIosArrowDown } from "react-icons/io";
 
 export function Dropdown({options,header}) {
     const [dropdownState, setdropdownState] = useState(false);
@@ -8,7 +8,7 @@ export function Dropdown({options,header}) {
     const selected = (e) =>{
      const item = e.target.value
      setselectedItem({...selectedItem,
-     
+     item
      })
      console.log(selectedItem)
     }

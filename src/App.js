@@ -9,6 +9,7 @@ import Services from "./component/services";
 import Footer from "./component/footer";
 import {BrowserRouter as Router,Route,Switch} from 'react-router-dom'
 import { Men } from "./pages/men";
+import { Cart } from "./pages/cart";
 AOS.init();
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
     <Switch>
       <Route path='/' exact component={Home} />
       <Route path='/men' component={Men}/>
+      <Route path='/cart' component={Cart}/>
     </Switch>
     </Router>
     </div>

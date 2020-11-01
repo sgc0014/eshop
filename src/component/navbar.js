@@ -132,12 +132,16 @@ export default function Navbar(props) {
             </span>
             <span className="count">0</span>
           </li>
+          <Link to='/cart'>
+        
           <li className="nav-item">
             <span className="responsive-icon">
               <FiShoppingCart size={"1.5em"} strokeWidth={"1"} />
             </span>
             <span className="count">0</span>
           </li>
+         
+          </Link>
         </ul>
       </div>
       {/* burger navbar */}
