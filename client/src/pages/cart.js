@@ -4,25 +4,29 @@ import "./cart.css";
 export function Cart(props) {
   const [Cartproduct, setCartproduct] = useState([
     {
-      id: 0,
+      name: "full sleeve tshirt",
+      price: 500,
+      img: "mtshirt.jpg",
+      gender: "male",
+      category: "tshirt",
+      size: "xs",
+     quantity:1
+    },
+    {
       name: "short sleeve tshirt",
-      price: 200,
-      img: "product2.jpg",
-      quantity: 1,
+      price: 600,
+      img: "mtshirt1.jpg",
+      category: "tshirt",
+      size: "s",
+     quantity:1
     },
     {
-      id: 1,
-      name: "short tshirt",
-      price: 100,
-      img: "product2.jpg",
-      quantity: 1,
-    },
-    {
-      id: 2,
-      name: "long tshirt",
-      price: 100,
-      img: "product2.jpg",
-      quantity: 1,
+      name: " tshirt",
+      price: 300,
+      img: "mtshirt2.jpg",
+      category: "tshirt",
+      size: "m",
+     quantity:1
     },
   ]);
   const [sum, setsum] = useState(0);

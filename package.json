@@ -21,7 +21,8 @@
   },
   "homepage": "https://github.com/sgc0014/eshop#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mongoose": "^5.10.11"
   },
   "devDependencies": {
     "concurrently": "^5.3.0",

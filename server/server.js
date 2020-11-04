@@ -1,5 +1,10 @@
 const app = require("express")();
+const mongoose = require("mongoose")
 const products = require("./product");
+
+
+
+
 
 app.get("/", (req, res) => {
   res.send("Server running");
@@ -13,7 +18,18 @@ app.get("/product/:id", (req, res) => {
     res.json(product);
   });
   
+  const uri = "mongodb+srv://sgc0014:thor0014@api.r67gw.mongodb.net/api?retryWrites=true&w=majority";
+  mongoose.connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+  .then(() => {
 
-app.listen(5000, () => {
-  console.log("Server running");
-});
+    console.log("mongoose connected")
+    
+    app.listen(5000, () => {
+      console.log("Server running");
+    });
+    
+  })
+  .catch(err => console.log(err))

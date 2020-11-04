@@ -8,7 +8,6 @@ const reducer = combineReducers({
 })
 
 const initalState = {
-  
 }
 
 const middleware = [thunk]

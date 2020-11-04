@@ -10,6 +10,7 @@ import Footer from "./component/footer";
 import {BrowserRouter as Router,Route,Switch} from 'react-router-dom'
 import { Men } from "./pages/men";
 import { Cart } from "./pages/cart";
+import { Productdetail } from "./pages/productDetail";
 AOS.init();
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
       <Route path='/' exact component={Home} />
       <Route path='/men' component={Men}/>
       <Route path='/cart' component={Cart}/>
+      <Route path='/productDetail' component={Productdetail}/>
     </Switch>
     </Router>
     </div>

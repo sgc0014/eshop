@@ -179,8 +179,8 @@ display: none;
 }
 @media screen and (max-width: 550px) {
   .App {
-    margin-right: 10px;
-    margin-left: 10px;
+    margin-right: 5px;
+    margin-left: 5px;
   }
   .navbar {
     padding: 8px 10px;

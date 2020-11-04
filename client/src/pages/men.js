@@ -1,72 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {} from "react-icons/io";
 import { Dropdown } from "../component/dropDown";
 import { IoIosArrowDown } from "react-icons/io";
 import Product from "../component/product";
 import "./men.css";
+import  {listProducts} from '../store/actions/productActions';
+import {useDispatch,useSelector} from 'react-redux'
 
 export function Men(props) {
-  const [productList, setproductList] = useState([
-    {
-      name: "full sleeve tshirt",
-      price: 500,
-      img: "mtshirt.jpg",
-      gender: "male",
-      category: "tshirt",
-     size:'xs'
-    },
-    {
-      name: "short sleeve tshirt",
-      price: 600,
-      img: "mtshirt1.jpg",
-      category: "tshirt",
-     size:'s'
-    },
-    {
-      name: " tshirt",
-      price: 300,
-      img: "mtshirt2.jpg",
-      category: "tshirt",
-     size:'m'
-    },
-    {
-      name: "full sleeve tshirt",
-      price: 500,
-      img: "mjeans.jpg",
-      category: "jeans",
-     size:'l'
-    },
-    {
-      name: "short sleeve tshirt",
-      price: 600,
-      img: "mjeans1.jpg",
-      category: "jeans",
-     size:'xl'
-    },
-    {
-      name: " tshirt",
-      price: 300,
-      img: "mshirt.jpg",
-      category: "shirt",
-     size:'xs'
-    },
-    {
-      name: "full sleeve tshirt",
-      price: 500,
-      img: "mshirt1.jpg",
-      category: "shirt",
-     size:'s'
-    },
-    {
-      name: "short sleeve tshirt",
-      price: 600,
-      img: "mshirt2.jpg",
-      category: "shirt",
-     size:'m'
-    },
-  
 
-  ]);
+  const dispatch = useDispatch()
+  const productList = useSelector(state => state.productList)
+  const {error,loading,products} = productList
+
+  useEffect(() =>{
+    dispatch(listProducts())
+  },[dispatch])
+ 
   const [filterList, setFilterlist] = useState([
     {
       header: "category",
@@ -128,11 +78,11 @@ export function Men(props) {
   };
   const filterChange = () => {
     console.log("h");
-    let filterredProduct = productList.filter(
-      (product) =>
-        filter.category.toLowerCase() == product.category.toLowerCase()
-    );
-    setproductList(filterredProduct);
+    // let filterredProduct = productList.filter(
+    //   (product) =>
+    //     filter.category.toLowerCase() == product.category.toLowerCase()
+    // );
+    // setproductList(filterredProduct);
   };
   return (
     <section className="men-section">
@@ -188,7 +138,7 @@ export function Men(props) {
         </div>
         <div className="right">
           <div className="products-container">
-            {productList.map((product) => (
+            {products.map((product) => (
               <Product
                 name={product.name}
                 price={product.price}
