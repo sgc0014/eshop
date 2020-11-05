@@ -19,10 +19,10 @@ Router.get("/:id", asyncHandler (async (req, res) => {
   if (product) {
     res.json(product);
   } else {
-    res.statusCode(404).json({ msg: "No product found" });
+    res.statusCode(404)
+    throw new Error(`No such product found`)
   }
 
-  res.json(products);
 }))
 
 

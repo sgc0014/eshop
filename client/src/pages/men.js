@@ -4,19 +4,18 @@ import { Dropdown } from "../component/dropDown";
 import { IoIosArrowDown } from "react-icons/io";
 import Product from "../component/product";
 import "./men.css";
-import  {listProducts} from '../store/actions/productActions';
-import {useDispatch,useSelector} from 'react-redux'
+import { listProducts } from "../store/actions/productActions";
+import { useDispatch, useSelector } from "react-redux";
 
 export function Men(props) {
+  const dispatch = useDispatch();
+  const productList = useSelector((state) => state.productList);
+  const { error, loading, products } = productList;
 
-  const dispatch = useDispatch()
-  const productList = useSelector(state => state.productList)
-  const {error,loading,products} = productList
+  useEffect(() => {
+    dispatch(listProducts());
+  }, [dispatch]);
 
-  useEffect(() =>{
-    dispatch(listProducts())
-  },[dispatch])
- 
   const [filterList, setFilterlist] = useState([
     {
       header: "category",
@@ -42,8 +41,6 @@ export function Men(props) {
   });
 
   const [dropdownState, setdropdownState] = useState(false);
-
-
 
   const selected = (option, header) => {
     if (header.toLowerCase() == "category") {
@@ -84,7 +81,11 @@ export function Men(props) {
     // );
     // setproductList(filterredProduct);
   };
-  return (
+  return loading ? (
+    <h2>Loading...</h2>
+  ) : error ? (
+    <h2>{error.message}</h2>
+  ) : (
     <section className="men-section">
       <div className="header">
         <h2>Mens Clothing</h2>
@@ -138,11 +139,13 @@ export function Men(props) {
         </div>
         <div className="right">
           <div className="products-container">
-            {products.map((product) => (
+            {products.map((product,i=product._id) => (
               <Product
                 name={product.name}
                 price={product.price}
                 img={product.img}
+                id={product._id}
+                key={i}
               />
             ))}
           </div>

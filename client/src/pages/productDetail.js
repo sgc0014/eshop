@@ -1,35 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./productDetail.css";
+import { useDispatch, useSelector } from "react-redux";
+import { productDetail } from "../store/actions/productActions";
 
 export function Productdetail(props) {
+  const dispatch = useDispatch();
+  const productDetails = useSelector((state) => state.productDetail);
+  const { error, loading, product } = productDetails;
+  console.log(product);
+
+  useEffect(() => {
+    dispatch(productDetail(props.match.params.id));
+  }, [dispatch]);
+
   const [cartState, setcartState] = useState(false);
   const [quantity, setQuantity] = useState(1);
-  return (
+
+  return loading ? (
+    <h2>Loading...</h2>
+  ) : error ? (
+    <h2>{error.message}</h2>
+  ) : (
     <section className="product-detail-container">
       <div className="product-detail-image-container">
-        <img src="/products/mshirt1.jpg" />
+        <img src={`/products/${product.img}`} />
       </div>
 
       <div className="product-info">
-        <header>Black Collarless Shirt </header>
+        <header>{product.name} </header>
 
-        <div className="product-detail-price">Rs.800</div>
+        <div className="product-detail-price">Rs.{product.price}</div>
 
         <div className="extra-info">
           <h4>Availability : </h4>
-          <span className="info">In Stock</span>
+          <span className="info">
+            {product.countInStock > 0 ? "In Stock" : "Out of Stock"}
+          </span>
         </div>
 
         <div className="extra-info">
           <h4>Brand: </h4>
-          <span className="info">XYZ Company</span>
+          <span className="info">{product.brand}</span>
         </div>
 
-        <div className="product-description" style={{textAlign:"justify"}}>
-          loremQui deserunt sit commodo dolor reprehenderit aute eiusmod. Mollit
-          irure officia in sit mollit aliqua in ad laborum minim magna aute ea
-          quis. Ullamco dolore ullamco et enim culpa officia velit eu aliqua
-          laborum.
+        <div className="product-description" style={{ textAlign: "justify" }}>
+          {product.description}
         </div>
 
         <div className="product-action">

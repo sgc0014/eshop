@@ -12,6 +12,7 @@
 .product-info>header{
     font-family: 'Poppins-Bold';
     font-size: 32px;
+    text-transform: capitalize;
 }
 
 .product-detail-price {
@@ -23,6 +24,7 @@
 .extra-info{
     display: flex;
     margin: 25px 0;
+    text-transform: capitalize;
 }
 .extra-info>h4{
     margin: 0;

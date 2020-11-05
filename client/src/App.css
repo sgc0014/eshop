@@ -399,6 +399,7 @@ display: none;
   margin-bottom: 0;
   font-size: 14px;
   text-transform: capitalize;
+  color: black;
 }
 .product-price {
   color: #999292;
@@ -419,6 +420,9 @@ display: none;
   position: absolute;
   top: 5px;
   left: 5px;
+}
+.icon-clicked>svg{
+  fill: #fff;
 }
 .icon-mob {
   color: black;
