@@ -1,35 +1,20 @@
 const app = require("express")();
-const mongoose = require("mongoose")
-const products = require("./product");
+const mongoose = require("mongoose");
+const dotenv = require('dotenv');
+const productRoutes = require('./routes/productRoute')
+const connectDb = require("./config/dbConnect");
 
 
-
-
+dotenv.config()
+connectDb();
 
 app.get("/", (req, res) => {
-  res.send("Server running");
+  res.send("Eshop server running");
 });
 
-app.get("/products", (req, res) => {
-  res.json(products);
-});
-app.get("/product/:id", (req, res) => {
-    const product = products.find(product => product.id == req.params.id)
-    res.json(product);
-  });
-  
-  const uri = "mongodb+srv://sgc0014:thor0014@api.r67gw.mongodb.net/api?retryWrites=true&w=majority";
-  mongoose.connect(uri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
-  .then(() => {
+app.use('/api/products', productRoutes)
 
-    console.log("mongoose connected")
-    
-    app.listen(5000, () => {
-      console.log("Server running");
-    });
-    
-  })
-  .catch(err => console.log(err))
+
+app.listen(process.env.PORT || 5000, () => {
+  console.log(`server running at ${process.env.PORT} on ${process.env.NODE_ENV} mode`);
+});

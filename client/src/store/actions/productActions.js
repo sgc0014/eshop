@@ -1,6 +1,6 @@
 export const listProducts = () => async (dispatch) => {
   try {
-    dispatch({ type: "PRODUCT_LIST_REQUES" });
+    dispatch({ type: "PRODUCT_LIST_REQUEST" });
     dispatch({
       type: "PRODUCT_LIST_SUCCESS",
       payload: [
@@ -64,6 +64,26 @@ export const listProducts = () => async (dispatch) => {
       ],
     });
   } catch (error) {
-      
+    dispatch({ type: "PRODUCT_LIST_FAIL", payload: error });
+  }
+};
+
+export const productDetail = () => async (dispatch) => {
+  try {
+    dispatch({ type: "PRODUCT_DETAIL_REQUEST" });
+    dispatch({
+      type: "PRODUCT_DETAIL_SUCCESS",
+      payload: {
+        name: "short sleeve tshirt",
+        price: 600,
+        img: "mshirt2.jpg",
+        category: "shirt",
+        size: "m",
+        description:
+          " loremQui deserunt sit commodo dolor reprehenderit aute eiusmod. Mollit irure officia in sit mollit aliqua in ad laborum minim magna aute ea quis. Ullamco dolore ullamco et enim culpa officia velit eu aliqua laborum.",
+      },
+    });
+  } catch (error) {
+    dispatch({ type: "PRODUCT_DETAIL_FAIL", payload: error });
   }
 };
