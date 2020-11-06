@@ -1,65 +1,36 @@
 import React, { useEffect, useState } from "react";
 import "./cart.css";
+import { useDispatch, useSelector } from "react-redux";
+import { removeCartItem } from "../store/actions/cartAction";
 
 export function Cart(props) {
-  const [Cartproduct, setCartproduct] = useState([
-    {
-      name: "full sleeve tshirt",
-      price: 500,
-      img: "mtshirt.jpg",
-      gender: "male",
-      category: "tshirt",
-      size: "xs",
-     quantity:1
-    },
-    {
-      name: "short sleeve tshirt",
-      price: 600,
-      img: "mtshirt1.jpg",
-      category: "tshirt",
-      size: "s",
-     quantity:1
-    },
-    {
-      name: " tshirt",
-      price: 300,
-      img: "mtshirt2.jpg",
-      category: "tshirt",
-      size: "m",
-     quantity:1
-    },
-  ]);
+  const dispatch = useDispatch();
+  const cart = useSelector((state) => state.cart);
+  const { cartItems } = cart;
   const [sum, setsum] = useState(0);
+  const [cartstore,setcartstore] = useState();
   const [deliveryCharge, setdeliveryCharge] = useState(100);
 
   const setTotal = () => {
-    setsum(Cartproduct.reduce((a, b) => a + b.price * b.quantity, 0));
-  };
-
-  const filterCart = (id) => {
-    let newCart = Cartproduct.filter((product) => product.id !== id);
-    console.log(newCart.length);
-    setCartproduct(newCart);
+    setsum(cartItems.reduce((a, b) => a + b.price * b.qty, 0));
   };
 
   useEffect(() => {
-    if (Cartproduct.length > 0) {
-      setTotal();
-    }
-  }, []);
+    setcartstore(cartItems)
+    setTotal();
+  }, [setTotal,cartItems]);
 
-  return Cartproduct && Cartproduct.length > 0 ? (
+  return cartstore && cartstore.length > 0 ? (
     <section style={{ marginTop: "100px" }}>
-       <header className="cart-body-header">
-          <div className="cart-header-container">
-            <h3>Cart</h3>
-          </div>
-        </header>
+      <header className="cart-body-header">
+        <div className="cart-header-container">
+          <h3>Cart</h3>
+        </div>
+      </header>
       <main className="cart-body">
-       
-        {Cartproduct &&
-          Cartproduct.map((product) => (
-            <div className="cart-product">
+        {cartstore &&
+          cartstore.map((product,i=product._id) => (
+            <div className="cart-product" key={i}>
               <div className="cart-product-display">
                 <div className="cart-product-img-container">
                   <img
@@ -71,26 +42,28 @@ export function Cart(props) {
                   <div
                     className="increment quantity"
                     onClick={() => {
-                      const index = Cartproduct.indexOf(product);
-                      const array = [...Cartproduct];
-                      array[index].quantity++;
-                      setCartproduct(array);
-                      setTotal();
+                      const index = cartstore.indexOf(product);
+                      const array = [...cartstore];
+                      if (product.qty < product.countInStock) {
+                        array[index].qty++;
+                      }
+                      setcartstore(array)
+                    
                     }}
                   >
                     +
                   </div>
-                  {product.quantity}
+                  {product.qty}
                   <div
                     className="decrement quantity"
                     onClick={() => {
-                      const index = Cartproduct.indexOf(product);
-                      const array = [...Cartproduct];
-                      if (product.quantity !== 1) {
-                        array[index].quantity--;
+                      const index = cartstore.indexOf(product);
+                      const array = [...cartstore];
+                      if (product.qty !== 1) {
+                        array[index].qty--;
                       }
-
-                      setCartproduct(array);
+                      setcartstore(array)
+                      console.log(cartstore)
                     }}
                   >
                     -
@@ -103,7 +76,7 @@ export function Cart(props) {
                 <button
                   className="cart-product-button"
                   onClick={() => {
-                    filterCart(product.id);
+                    dispatch(removeCartItem(product));
                   }}
                 >
                   Remove
@@ -113,7 +86,7 @@ export function Cart(props) {
           ))}
         <div
           className={
-            Cartproduct.length <= 2 
+            cartstore.length <= 2
               ? "cart-checkout cart-checkout-alt"
               : " cart-checkout "
           }
@@ -125,7 +98,7 @@ export function Cart(props) {
         <header>Price Details</header>
         <div className="prices">
           <div>
-            <span>Price ({Cartproduct.length} items):</span>
+            <span>Price ({cartstore.length} items):</span>
             <span> Rs.{sum}</span>
           </div>
           <div>
@@ -143,9 +116,7 @@ export function Cart(props) {
         </div>
       </div>
     </section>
-  
   ) : (
     <section className="cart-product-empty">...No items in cart...</section>
   );
-  
 }

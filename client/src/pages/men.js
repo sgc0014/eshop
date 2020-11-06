@@ -43,8 +43,8 @@ export function Men(props) {
   const [dropdownState, setdropdownState] = useState(false);
 
   const selected = (option, header) => {
-    if (header.toLowerCase() == "category") {
-      if (filter.category == option) {
+    if (header.toLowerCase() === "category") {
+      if (filter.category === option) {
         filter.category = "";
 
         console.log(filter);
@@ -53,8 +53,8 @@ export function Men(props) {
         console.log(filter);
       }
     }
-    if (header.toLowerCase() == "size") {
-      if (filter.size == option) {
+    if (header.toLowerCase() === "size") {
+      if (filter.size === option) {
         filter.size = "";
         console.log(filter);
       } else {
@@ -62,8 +62,8 @@ export function Men(props) {
         console.log(filter);
       }
     }
-    if (header.toLowerCase() == "gender") {
-      if (filter.gender == option) {
+    if (header.toLowerCase() === "gender") {
+      if (filter.gender === option) {
         filter.gender = "";
         console.log(filter);
       } else {
@@ -77,7 +77,7 @@ export function Men(props) {
     console.log("h");
     // let filterredProduct = productList.filter(
     //   (product) =>
-    //     filter.category.toLowerCase() == product.category.toLowerCase()
+    //     filter.category.toLowerCase() === product.category.toLowerCase()
     // );
     // setproductList(filterredProduct);
   };
@@ -96,8 +96,8 @@ export function Men(props) {
           <div className="filter-container">
             <header className="filter-header">filter</header>
             <main>
-              {filterList.map((filter) => (
-                <section className="filter-dropdown">
+              {filterList.map((filter,i) => (
+                <section className="filter-dropdown"key={i}>
                   <header
                     className="filter-option-header"
                     onClick={() => {
@@ -122,9 +122,10 @@ export function Men(props) {
                         : "dropdown-options dropdown-options-hide"
                     }
                   >
-                    {filter.options.map((option) => (
+                    {filter.options.map((option,i) => (
                       <li
                         className="option"
+                        key={i}
                         value={option}
                         onClick={() => selected(option, filter.header)}
                       >
