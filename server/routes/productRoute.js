@@ -1,29 +1,14 @@
 const Router = require("express").Router();
-const asyncHandler = require('express-async-handler')
-const Product = require("../model/productModel");
+const productControllers = require("../controllers/productController");
+const { getProducts, getProductDetails } = productControllers;
+
 
 //@desc Get all product => /api/products/
 //@access Public
-Router.get("/", asyncHandler( async (req, res, next) => {
-  const products = await Product.find({});
-
-  res.json(products);
-}))
+Router.get("/", getProducts);
 
 //@desc Get one product => /api/products/:id
 //@access Public
-Router.get("/:id", asyncHandler (async (req, res) => {
-  const id = req.params.id;
-  const product = await Product.findById(id);
+Router.get("/:id", getProductDetails);
 
-  if (product) {
-    res.json(product);
-  } else {
-    res.statusCode(404)
-    throw new Error(`No such product found`)
-  }
-
-}))
-
-
-module.exports = Router
+module.exports = Router;
