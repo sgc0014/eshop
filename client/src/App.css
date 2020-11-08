@@ -3,8 +3,10 @@
   margin-right: 50px;
   margin-left: 50px;
 }
+
 a{
   text-decoration: none;
+  color: black;
 }
 img{
   object-fit: cover;
@@ -27,6 +29,32 @@ section {
   right: 0;
   background: #fff;
   z-index: 50;
+}
+.profile{
+  position: relative;
+}
+.profile-dropdown-menu{
+  position: absolute;
+  display: none;
+  padding: 0;
+  left: -18px;
+  top: 43px;
+  background: #fff;
+  list-style: none;
+  font-size: 13px;
+  width: 107px;
+  color: black;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+}
+.open{
+  display: block;
+}
+.profile-dropdown-menu>li{
+  padding: 5px;
+}
+.profile-dropdown-menu>li:hover{
+  background: #eaeaea;
+  
 }
 .mobile-nav-container {
   display: none;
@@ -68,6 +96,7 @@ section {
   text-align: center;
   line-height: 1;
   box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.3);
+ 
 }
 .hide-sm-search {
   display: none;
@@ -122,6 +151,7 @@ display: none;
     height: 100%;
     background: #fff;
     left: 0px;
+    top: 71px;
   }
   .mobile-nav > header {
     border-bottom: 1.5px solid #cecece;
@@ -131,14 +161,24 @@ display: none;
     display: flex;
     justify-content: space-between;
   }
-  .mobile-nav > li {
+  .mobile-nav-first-item {
     padding: 15px 0;
     padding-left: 14px;
     list-style: none;
     cursor: pointer;
     font-size: 14px;
   }
-  .mobile-nav > li:hover {
+  .mobile-nav-first-item>span:hover{
+    border-bottom: 1px solid #737373;
+  }
+  .mobile-nav-item {
+    padding: 15px 0;
+    padding-left: 14px;
+    list-style: none;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .mobile-nav-item:hover {
     background: #e8e8e8;
   }
   .close:hover {
@@ -153,6 +193,7 @@ display: none;
     z-index: -1000;
     background: #fff;
   }
+
 }
 @media screen and (max-width: 700px) {
   .hide-sm-search {
@@ -175,6 +216,13 @@ display: none;
   }
   .bigSearch {
     display: none !important;
+  }
+}
+@media screen and (max-width: 980px) {
+  .App {
+   
+    margin-right: 30px;
+    margin-left: 30px;
   }
 }
 @media screen and (max-width: 550px) {
@@ -281,6 +329,62 @@ display: none;
     padding: 2px 12px;
   }
 }
+/* form */
+.error-message {
+  padding: 9px 2px;
+  background: #eca2a2;
+  color: #8e0606;
+}
+.form-container {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+
+.main-form-input {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-form-input > input {
+  height: 27px;
+  background: #f1f0f0;
+  border: 1px #f1f0f0;
+  outline: none;
+  padding: 5px;
+}
+.main-form-input > label {
+  margin-top: 24px;
+  margin-bottom: 6px;
+}
+
+.form-button {
+  background: #56cfe1;
+  color: #fff;
+  border: 1px #56cfe1;
+  height: 35px;
+  padding: 1px 20px;
+  margin: 30px 0;
+  cursor: pointer;
+  outline: none;
+}
+.form-button:hover {
+  background: #4cbfd0;
+}
+.form-bottom>a{
+  text-decoration: none;
+    color: black;
+    font-weight: 600;
+    cursor: pointer;
+}
+@media screen and (max-width: 960px) {
+    .form-container {
+        max-width: 1000px;
+      }
+    
+
+}
+
 
 /* trending */
 

@@ -11,6 +11,8 @@ import {BrowserRouter as Router,Route,Switch} from 'react-router-dom'
 import { Men } from "./pages/men";
 import { Cart } from "./pages/cart";
 import { Productdetail } from "./pages/productDetail";
+import { Login } from "./pages/logIn";
+import { SignUp } from "./pages/signUp";
 AOS.init();
 
 function App() {
@@ -36,6 +38,8 @@ function App() {
       <Route path='/men' component={Men}/>
       <Route path='/cart' component={Cart}/>
       <Route path='/productDetail/:id' component={Productdetail}/>
+      <Route path='/logIn' component={Login}/>
+      <Route path='/signup' component={SignUp}/>
     </Switch>
     </Router>
     </div>

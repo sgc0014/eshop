@@ -14,11 +14,17 @@ import { Link } from "react-router-dom";
 export default function Navbar(props) {
   const [mobileNav, setmobileNav] = useState(false);
   const [searchToggler, setsearchToggler] = useState(false);
+  const [profileDropdown, setprofileDropdown] = useState(false);
   const [searchTerm, setsearchTerm] = useState("");
 
   const innerRef = useOuterClick((ev) => {
     if (mobileNav) {
       setmobileNav(false);
+    }
+  });
+  const profileRef = useOuterClick((ev) => {
+    if (profileDropdown) {
+      setprofileDropdown(false);
     }
   });
   const searchRef = useOuterClick((ev) => {
@@ -46,18 +52,20 @@ export default function Navbar(props) {
           <div className="line3"></div>
         </div>
         <header className="brand-name">
-        <Link to='/'><img src={logo} alt="" /></Link>  
+          <Link to="/">
+            <img src={logo} alt="" />
+          </Link>
         </header>
         <ul className="first-part-nav nav-items">
           <Link to="/men">
             {" "}
             <li className=" nav-item"> Men </li>
           </Link>
-          <Link to="/men">
+          <Link to="/women">
             {" "}
             <li className=" nav-item">Women</li>
           </Link>
-          <Link to="/men">
+          <Link to="/accesories">
             {" "}
             <li className=" nav-item">Accesories</li>
           </Link>
@@ -121,26 +129,28 @@ export default function Navbar(props) {
               }}
             ></input>
           </form>
-          <li className="nav-item">
-            <span className="responsive-icon">
+          <li className="nav-item profile" onClick={() => {setprofileDropdown(!profileDropdown)}} ref={profileRef}>
+            <span className="responsive-icon ">
               <FiUser size={"1.5em"} strokeWidth={"1"} />
             </span>
-          </li>
-          <li className="nav-item hideWishList">
+            <ul className={profileDropdown?"profile-dropdown-menu open":"profile-dropdown-menu"}>
+                <li><Link to='/profile'> Profile </Link></li>
+                <li>Log Out</li>
+            </ul>
+          </li>   
+          {/* <li className="nav-item hideWishList">
             <span className="responsive-icon">
               <FiHeart size={"1.5em"} strokeWidth={"1"} />
             </span>
             <span className="count">0</span>
-          </li>
-          <Link to='/cart'>
-        
-          <li className="nav-item">
-            <span className="responsive-icon">
-              <FiShoppingCart size={"1.5em"} strokeWidth={"1"} />
-            </span>
-            <span className="count">0</span>
-          </li>
-         
+          </li> */}
+          <Link to="/cart">
+            <li className="nav-item">
+              <span className="responsive-icon">
+                <FiShoppingCart size={"1.5em"} strokeWidth={"1"} />
+              </span>
+              <span className="count">0</span>
+            </li>
           </Link>
         </ul>
       </div>
@@ -156,12 +166,13 @@ export default function Navbar(props) {
           className={mobileNav ? "mobile-nav" : "mobile-nav hidemobile"}
           ref={innerRef}
         >
-          <header className="mobile-nav-item">
-            Welcome Guest{" "}
-            <span className="close" style={{ paddingRight: "16px" }}>
-              <FiPlus size={"1.5em"} />
+          <li className="mobile-nav-first-item">
+            <span style={{fontWeight:"600"}}>
+              <Link to="login">Login</Link>
+            </span> or <span style={{fontWeight:"600"}}>
+              <Link to="signup">Sign Up</Link>
             </span>
-          </header>
+          </li>
           <li className="mobile-nav-item">Men</li>
           <li className="mobile-nav-item">Women</li>
           <li className="mobile-nav-item">Accesories</li>
