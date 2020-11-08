@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import "./logIn.css";
+import { useDispatch, useSelector } from "react-redux";
+import { userLogin } from "../store/actions/userAction";
 
 export function Login(props) {
+  const dispatch = useDispatch();
+  const userLoginState = useSelector((state) => state.userLogin);
+  const {error} = userLoginState
+  const [email, setemail] = useState("");
+  const [password, setpassword] = useState("");
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    dispatch(userLogin({ email, password }));
+  };
   return (
     <>
       <section className="form-container">
@@ -10,13 +21,26 @@ export function Login(props) {
           <h2>Log In</h2>
         </header>
 
-        <form className="main-form">
-          <div className="error-message">Unauthorized user</div>
+        <form className="main-form" onSubmit={handleLogin}>
+          {error ? <div className="error-message">{error}</div> : ""}
           <div className="main-form-input">
-            <label for="email">Email:</label>
-            <input id="email" name="email"></input>
-            <label for="password">Password:</label>
-            <input id="password" name="password" type="password"></input>
+            <label htmlFor="email">Email:</label>
+            <input
+              id="email"
+              name="email"
+              onChange={(e) => {
+                setemail(e.target.value);
+              }}
+            ></input>
+            <label htmlFor="password">Password:</label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              onChange={(e) => {
+                setpassword(e.target.value);
+              }}
+            ></input>
           </div>
           <button className="form-button">Log In</button>
         </form>

@@ -30,7 +30,7 @@ function App() {
   )
 
   return (
-    <div className="App">
+    <div className="App">{console.log("localStorage",localStorage)}
     <Router>
     <Navbar />
     <Switch>

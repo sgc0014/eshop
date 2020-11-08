@@ -25,7 +25,10 @@ export const userSignUp = ({ email, password, name }) => async (dispatch) => {
 
     localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
-    dispatch({ type: "USER_SIGNUP_FAIL", payload: error });
+    dispatch({ type: "USER_SIGNUP_FAIL",  payload:
+    error.response && error.response.data.message
+      ? error.response.data.message
+      : error.message, });
   }
 };
 
@@ -42,14 +45,20 @@ export const userLogin = ({ email, password }) => async (dispatch) => {
         },
       }
     );
-
     dispatch({
       type: "USER_LOGIN_SUCCESS",
       payload: data,
     });
+
     localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
-    dispatch({ type: "USER_LOGIN_FAIL", payload: error });
+    dispatch({
+      type: "USER_LOGIN_FAIL",
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
   }
 };
 

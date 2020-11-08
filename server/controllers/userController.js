@@ -33,11 +33,11 @@ const logInController = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email });
   console.log(req.body);
   if (user) {
-    const authorized = bcrypt.compare(password, user.password);
+    const authorized = await bcrypt.compare(password, user.password);
+ 
     if (authorized) {
       res.json({
         email: user.email,
-        password: user.password,
         id: user._id,
         isAdmin: user.isAdmin,
         token: generateToken(user._id),

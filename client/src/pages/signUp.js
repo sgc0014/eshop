@@ -1,7 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { userSignUp } from "../store/actions/userAction";
 
 export function SignUp(props) {
+  const dispatch = useDispatch();
+  const userSignUpState = useSelector((state) => state.userSignUp);
+  const {error} = userSignUpState
+  const [email, setemail] = useState("");
+  const [name, setname] = useState("");
+  const [password, setpassword] = useState("");
+
+  const handleSignUp = (e) => {
+    e.preventDefault();
+    dispatch(userSignUp({email,name,password}))
+  }
   return (
     <>
       <section className="form-container">
@@ -9,15 +22,15 @@ export function SignUp(props) {
           <h2>Sign Up</h2>
         </header>
 
-        <form className="main-form">
-          <div className="error-message">Unauthorized user</div>
+        <form className="main-form" onSubmit={handleSignUp}>
+         {error? <div className="error-message">{error}</div>:''}
           <div className="main-form-input">
-            <label for="email">Name:</label>
-            <input id="email" name="email"></input>
-            <label for="email">Email:</label>
-            <input id="email" name="email"></input>
-            <label for="password">Password:</label>
-            <input id="password" name="password" type="password"></input>
+            <label htmlFor="name">Name:</label>
+            <input onChange={(e) => {setname(e.target.value)}}  id="name" name="name"></input>
+            <label htmlFor="email">Email:</label>
+            <input onChange={(e) => {setemail(e.target.value)}} id="email" name="email"></input>
+            <label htmlFor="password">Password:</label>
+            <input onChange={(e) => {setpassword(e.target.value)}} id="password" name="password" type="password"></input>
           </div>
           <button className="form-button">Sign Up</button>
         </form>

@@ -2,16 +2,15 @@ import useOuterClick from "../utils/useOuterClick";
 import "../App.css";
 import React, { useState } from "react";
 import logo from "../assets/logo2.png";
-import {
-  FiUser,
-  FiSearch,
-  FiShoppingCart,
-  FiHeart,
-  FiPlus,
-} from "react-icons/fi";
+import { FiUser, FiSearch, FiShoppingCart, FiHeart } from "react-icons/fi";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { userLogout } from "../store/actions/userAction";
 
 export default function Navbar(props) {
+  const dispatch = useDispatch();
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
   const [mobileNav, setmobileNav] = useState(false);
   const [searchToggler, setsearchToggler] = useState(false);
   const [profileDropdown, setprofileDropdown] = useState(false);
@@ -129,15 +128,41 @@ export default function Navbar(props) {
               }}
             ></input>
           </form>
-          <li className="nav-item profile" onClick={() => {setprofileDropdown(!profileDropdown)}} ref={profileRef}>
-            <span className="responsive-icon ">
-              <FiUser size={"1.5em"} strokeWidth={"1"} />
-            </span>
-            <ul className={profileDropdown?"profile-dropdown-menu open":"profile-dropdown-menu"}>
-                <li><Link to='/profile'> Profile </Link></li>
-                <li>Log Out</li>
-            </ul>
-          </li>   
+          <li
+            className="nav-item profile"
+            onClick={() => {
+              setprofileDropdown(!profileDropdown);
+            }}
+            ref={profileRef}
+          >
+            {userInfo ? (
+              <>
+                <span className="responsive-icon ">
+                  <FiUser size={"1.5em"} strokeWidth={"1"} />
+                </span>
+                <ul
+                  className={
+                    profileDropdown
+                      ? "profile-dropdown-menu open"
+                      : "profile-dropdown-menu"
+                  }
+                >
+                  <li>
+                    <Link to="/profile"> Profile </Link>
+                  </li>
+                  <li
+                    onClick={() => {
+                      dispatch(userLogout());
+                    }}
+                  >
+                    Log Out
+                  </li>
+                </ul>
+              </>
+            ) : (
+              <Link to="/login">Log In</Link>
+            )}
+          </li>
           {/* <li className="nav-item hideWishList">
             <span className="responsive-icon">
               <FiHeart size={"1.5em"} strokeWidth={"1"} />
@@ -167,9 +192,11 @@ export default function Navbar(props) {
           ref={innerRef}
         >
           <li className="mobile-nav-first-item">
-            <span style={{fontWeight:"600"}}>
+            <span style={{ fontWeight: "600" }}>
               <Link to="login">Login</Link>
-            </span> or <span style={{fontWeight:"600"}}>
+            </span>{" "}
+            or{" "}
+            <span style={{ fontWeight: "600" }}>
               <Link to="signup">Sign Up</Link>
             </span>
           </li>
