@@ -52,5 +52,61 @@ const logInController = asyncHandler(async (req, res) => {
   }
 });
 
+
+const getAllUsers = asyncHandler(async (req, res) => {
+  const users = await User.find({})
+    res.status(201)
+    res.json(users)
+
+})
+
+
+const getUserDetail = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+
+  const user = await User.findById(id)
+  if(user){
+    res.status(201).json(user)
+  }
+  else{
+    res.status(404)
+    throw new Error("No such user found")
+  }
+})
+
+const deleteUser = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+
+  const user = await User.findById(id)
+  if(user){
+   await user.remove()
+    res.status(201).json("User removed")
+  }
+  else{
+    res.status(404)
+    throw new Error("No such user found")
+  }
+})
+
+// const updateUser = asyncHandler(async (req, res) => {
+//   const id = req.params.id;
+
+//   const user = await User.findById(id)
+//   if(user){
+//     user.name = req.body.name || user.name;
+//     user.email= req.body.email || user.email;
+//     user.
+//     res.status(201).json(user)
+//   }
+//   else{
+//     res.status(404)
+//     throw new Error("No such user found")
+//   }
+// })
+
+
 module.exports.signUpController = signUpController;
 module.exports.logInController = logInController;
+module.exports.getAllUsers = getAllUsers;
+module.exports.getUserDetail = getUserDetail;
+module.exports.deleteUser = deleteUser;

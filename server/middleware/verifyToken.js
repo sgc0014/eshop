@@ -22,4 +22,15 @@ const verifyToken = expressAsyncHandler(async(req,res,next) => {
     next()
 }
 )
+
+const verifyAdmin =  expressAsyncHandler(async(req,res,next) => {
+    if(req.user.isAdmin){
+        next()
+    }
+    else{
+        res.status(401)
+        throw new Error("User is not admin")
+    }
+})
 module.exports.verifyToken = verifyToken
+module.exports.verifyAdmin = verifyAdmin
