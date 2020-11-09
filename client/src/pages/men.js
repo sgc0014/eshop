@@ -47,35 +47,34 @@ export function Men(props) {
       if (filter.category === option) {
         filter.category = "";
 
-        console.log(filter);
+       
       } else {
         filter.category = option;
-        console.log(filter);
+       
       }
     }
     if (header.toLowerCase() === "size") {
       if (filter.size === option) {
         filter.size = "";
-        console.log(filter);
+       
       } else {
         filter.size = option;
-        console.log(filter);
+       
       }
     }
     if (header.toLowerCase() === "gender") {
       if (filter.gender === option) {
         filter.gender = "";
-        console.log(filter);
+       
       } else {
         filter.gender = option;
-        console.log(filter);
+       
       }
     }
     filterChange();
   };
   const filterChange = () => {
-    console.log("h");
-    // let filterredProduct = productList.filter(
+     // let filterredProduct = productList.filter(
     //   (product) =>
     //     filter.category.toLowerCase() === product.category.toLowerCase()
     // );

@@ -2,7 +2,8 @@ const app = require("express")();
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const productRoutes = require("./routes/productRoute");
-const userController = require("./routes/userRoute");
+const userRoutes = require("./routes/userRoute");
+const orderRoute = require("./routes/orderRoute");
 const errorMiddleware = require("./middleware/errorMiddleware");
 const connectDb = require("./config/dbConnect");
 const cors = require("cors");
@@ -18,7 +19,8 @@ app.get("/", (req, res) => {
 });
 app.use(bodyParser.json())
 app.use("/api/products", productRoutes);
-app.use("/api/auth", userController);
+app.use("/api/auth", userRoutes);
+app.use("/api/orders", orderRoute);
 
 app.use(errorMiddleware.urlError);
 app.use(errorMiddleware.errorHandler);

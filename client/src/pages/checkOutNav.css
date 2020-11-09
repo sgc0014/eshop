@@ -1,0 +1,9 @@
+.check-out-nav{
+    margin-top: 90px;
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 23px;
+}
+.check-out-nav-item[disabled]{
+    color: #969696;
+}

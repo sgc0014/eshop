@@ -1,15 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogin } from "../store/actions/userAction";
+import { Redirect } from "react-router-dom";
 
 export function Login(props) {
   const dispatch = useDispatch();
+  const history = useHistory();
   const userLoginState = useSelector((state) => state.userLogin);
-  const {error} = userLoginState
+  const redirect = window.location.search?window.location.search.split("=")[1]:'/'
+  const {error,userInfo} = userLoginState
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
-
+ 
+useEffect(() => {
+  if(userInfo){
+   
+  history.push(redirect)
+  }
+})
   const handleLogin = (e) => {
     e.preventDefault();
     dispatch(userLogin({ email, password }));

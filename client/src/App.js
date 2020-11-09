@@ -13,6 +13,9 @@ import { Cart } from "./pages/cart";
 import { Productdetail } from "./pages/productDetail";
 import { Login } from "./pages/logIn";
 import { SignUp } from "./pages/signUp";
+import { Shipping } from "./pages/shipping";
+import { Payment } from "./pages/payment";
+import { Placeorder } from "./pages/placeOrder";
 AOS.init();
 
 function App() {
@@ -40,6 +43,9 @@ function App() {
       <Route path='/productDetail/:id' component={Productdetail}/>
       <Route path='/logIn' component={Login}/>
       <Route path='/signup' component={SignUp}/>
+      <Route path='/shipping' component={Shipping}/>
+      <Route path='/payment' component={Payment}/>
+      <Route path='/placeorder' component={Placeorder}/>
     </Switch>
     </Router>
     </div>

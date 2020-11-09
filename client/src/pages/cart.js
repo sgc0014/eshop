@@ -8,7 +8,7 @@ export function Cart(props) {
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
   const [sum, setsum] = useState(0);
-  const [cartstore,setcartstore] = useState();
+  const [cartstore, setcartstore] = useState();
   const [deliveryCharge, setdeliveryCharge] = useState(100);
 
   const setTotal = () => {
@@ -16,20 +16,20 @@ export function Cart(props) {
   };
 
   useEffect(() => {
-    setcartstore(cartItems)
+    setcartstore(cartItems);
     setTotal();
-  }, [setTotal,cartItems]);
+  }, [setTotal, cartItems]);
 
   return cartstore && cartstore.length > 0 ? (
-    <section style={{ marginTop: "100px" }}>
-      <header className="cart-body-header">
-        <div className="cart-header-container">
-          <h3>Cart</h3>
-        </div>
-      </header>
+    <section className="cart-body-container">
       <main className="cart-body">
+        <header className="cart-body-header">
+          <div className="cart-header-container">
+            <h3>Cart</h3>
+          </div>
+        </header>
         {cartstore &&
-          cartstore.map((product,i=product._id) => (
+          cartstore.map((product, i = product._id) => (
             <div className="cart-product" key={i}>
               <div className="cart-product-display">
                 <div className="cart-product-img-container">
@@ -47,8 +47,7 @@ export function Cart(props) {
                       if (product.qty < product.countInStock) {
                         array[index].qty++;
                       }
-                      setcartstore(array)
-                    
+                      setcartstore(array);
                     }}
                   >
                     +
@@ -62,8 +61,8 @@ export function Cart(props) {
                       if (product.qty !== 1) {
                         array[index].qty--;
                       }
-                      setcartstore(array)
-                      console.log(cartstore)
+                      setcartstore(array);
+                   
                     }}
                   >
                     -
@@ -86,12 +85,12 @@ export function Cart(props) {
           ))}
         <div
           className={
-            cartstore.length <= 2
+            cartstore.length <= 1
               ? "cart-checkout cart-checkout-alt"
               : " cart-checkout "
           }
         >
-          <button>Place order</button>
+          <button onClick={() => {props.history.push('/login?redirect=shipping')}}>Place order</button>
         </div>
       </main>
       <div className="price-summary">

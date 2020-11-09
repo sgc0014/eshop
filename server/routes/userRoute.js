@@ -1,7 +1,7 @@
 const Router = require("express").Router();
 const userController = require("../controllers/userController");
 const { signUpController, logInController } = userController;
-const tokenMiddleware = require("../middleware/tokenMiddleware")
+const tokenMiddleware = require("../middleware/verifyToken")
 const {verifyToken} = tokenMiddleware
 const User = require("../model/userModel");
 
