@@ -32,10 +32,30 @@ const addOrderItems = asyncHandler(async (req, res) => {
 const getOrder = asyncHandler(async (req, res) => {
   const id = req.params.id;
 
+  const orderSelcted = await Order.findById(id).populate("user", "name email");
+  if (orderSelcted) {
+    res.status(201).json(orderSelcted);
+  } else {
+    res.status(400);
+    throw new Error("No such order found");
+  }
+});
+
+const updateTopaid = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+
   const orderSelcted = await Order.findById(id);
   if (orderSelcted) {
-   
-    res.status(201).json(orderSelcted);
+    orderSelcted.isPaid = true;
+    orderSelcted.isPaidAt = Date.now();
+    orderSelcted.paymentResult = {
+      id: req.body.id,
+      status: req.body.status,
+      update_time: req.body.update_time,
+      email_address: req.body.payer.email_address,
+    };
+    const updatedOrder = await orderSelcted.save();
+    res.status(201).json(updatedOrder);
   } else {
     res.status(400);
     throw new Error("No such order found");
@@ -44,3 +64,4 @@ const getOrder = asyncHandler(async (req, res) => {
 
 module.exports.addOrderItems = addOrderItems;
 module.exports.getOrder = getOrder;
+module.exports.updateTopaid = updateTopaid;

@@ -1,11 +1,39 @@
-export const orderCreateReducer = (state={order:[]},action) => {
+export const orderCreateReducer = (state={},action) => {
     switch(action.type){
         case "ORDER_CREATE_REQUEST":
             return {...state,loading:true}
         case "ORDER_CREATE_SUCCESS":
-             return {...state,loading:false,order:[...state.order,action.payload]}
+             return {...state,loading:false,success:true,order:action.payload}
         case "ORDER_CREATE_FAIL":
             return {...state,loading:false,error:action.payload}
+        default:
+            return state
+    }
+}
+
+export const orderDetailReducer = (state={},action) => {
+    switch(action.type){
+        case "ORDER_DETAIL_REQUEST":
+            return {...state,loading:true}
+        case "ORDER_DETAIL_SUCCESS":
+             return {...state,loading:false,order:action.payload}
+        case "ORDER_DETAIL_FAIL":
+            return {...state,loading:false,error:action.payload}
+        default:
+            return state
+    }
+}
+
+export const orderPayReducer = (state={},action) => {
+    switch(action.type){
+        case "ORDER_PAY_REQUEST":
+            return {...state,loading:true}
+        case "ORDER_PAY_SUCCESS":
+             return {...state,loading:false,success:true}
+        case "ORDER_PAY_FAIL":
+            return {...state,loading:false,error:action.payload}
+        case "ORDER_PAY_RESET":
+                return {}
         default:
             return state
     }
