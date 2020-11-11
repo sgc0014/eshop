@@ -1,0 +1,45 @@
+table {
+  width: 100%;
+}
+table,
+th,
+td {
+  border: 1px solid #dadada;
+  border-collapse: collapse;
+}
+td {
+  background: #e8e5e5;
+  padding: 10px 5px;
+  text-align: center;
+}
+.not-delivered > svg {
+  transform: rotate(45deg);
+  color: red;
+  font-size: 17px;
+}
+.not-paid > svg {
+  transform: rotate(45deg);
+  color: red;
+  font-size: 17px;
+}
+.detail-button {
+  background: #fff;
+  border: #fff;
+  padding: 5px;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 710px) {
+  td {
+    font-size: 10px;
+  }
+  th {
+    font-size: 14px;
+  }
+  .detail-button {
+font-size: 10px;
+  }
+}

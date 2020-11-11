@@ -54,6 +54,33 @@ export const getOrderDetail = (id) => async (dispatch, getState) => {
   }
 };
 
+export const orderList = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: "ORDER_LIST_REQUEST" });
+    const { userInfo } = getState().userLogin;
+    const { data } = await Axios.get(
+      `http://localhost:5000/api/orders/myOrder`,
+
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      }
+    );
+
+    dispatch({ type: "ORDER_LIST_SUCCESS", payload: data });
+  } catch (error) {
+    dispatch({
+      type: "ORDER_LIST_FAIL",
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
 export const updateToPay = (id, paymentResult) => async (
   dispatch,
   getState

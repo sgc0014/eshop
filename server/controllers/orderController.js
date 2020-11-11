@@ -9,6 +9,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
     itemsPrice,
     taxPrice,
     shippingPrice,
+    totalPrice
   } = req.body;
 
   if (orderItems.length > 0) {
@@ -41,6 +42,18 @@ const getOrder = asyncHandler(async (req, res) => {
   }
 });
 
+const myOrder = asyncHandler(async (req, res) => {
+ const order = await Order.find({user:req.user._id})
+ if(order){
+   res.json(order)
+ }
+ else{
+   res.status(404)
+   throw new Error("No orders found")
+ }
+  
+});
+
 const updateTopaid = asyncHandler(async (req, res) => {
   const id = req.params.id;
 
@@ -65,3 +78,4 @@ const updateTopaid = asyncHandler(async (req, res) => {
 module.exports.addOrderItems = addOrderItems;
 module.exports.getOrder = getOrder;
 module.exports.updateTopaid = updateTopaid;
+module.exports.myOrder = myOrder;
