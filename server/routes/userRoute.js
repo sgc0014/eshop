@@ -6,28 +6,33 @@ const {
   getUserDetail,
   getAllUsers,
   deleteUser,
+  updateUser
 } = userController;
 const tokenMiddleware = require("../middleware/verifyToken");
 const { verifyToken, verifyAdmin } = tokenMiddleware;
 const User = require("../model/userModel");
 
-//@desc register new user => /api/user/signUp
+//@desc register new user => /api/auth/signUp
 //@access Public
 Router.post("/signUp", signUpController);
 
-//@desc login user => /api/user/login
+//@desc login user => /api/auth/login
 //@access Public
 Router.post("/logIn", logInController);
 
-//@desc get user details => /api/user/getProfile
+//@desc get user details => /api/auth/getProfile
 //@access Private
-Router.get("/getProfile", verifyToken, getUserDetail);
+Router.get("/getProfile/:id", verifyToken, getUserDetail);
 
-//@desc get all users => /api/user/getusers
+//@desc get all users => /api/auth/getusers
 //@access Admin
-Router.get("/getusers", verifyToken, verifyAdmin, getAllUsers);
+Router.get("/getAlluser", verifyToken, verifyAdmin, getAllUsers);
 
-//@desc delete user => /api/user/deleteuser
+//@desc update user => /api/auth/updateUser/:id
+//@access Private
+Router.post("/updateuser/:id",verifyToken, updateUser);
+
+//@desc delete user => /api/auth/deleteuser
 //@access Admin
 Router.put("/deleteuser", verifyToken, verifyAdmin, deleteUser);
 

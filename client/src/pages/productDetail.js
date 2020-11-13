@@ -9,16 +9,15 @@ export function Productdetail(props) {
   const productDetails = useSelector((state) => state.productDetail);
   const cart = useSelector((state) => state.cart);
   const { error, loading, product } = productDetails;
-  const {cartItems} = cart
- 
+  const { cartItems } = cart;
 
   useEffect(() => {
     dispatch(productDetail(props.match.params.id));
-   const exist = cartItems.find(x =>  x._id === product._id)
-   if(exist){
-     setcartState(true)
-   }
-  }, [dispatch,cartItems,props.match.params.id]);
+    const exist = cartItems.find((x) => x._id === product._id);
+    if (exist) {
+      setcartState(true);
+    }
+  }, [dispatch, cartItems, props.match.params.id]);
 
   const [cartState, setcartState] = useState(false);
   const [quantity, setQuantity] = useState(1);
@@ -26,8 +25,8 @@ export function Productdetail(props) {
   const cartStateAction = () => {
     if (!cartState) {
       setcartState(true);
-      
-      dispatch(addCartItem({...product,qty:quantity}));
+
+      dispatch(addCartItem({ ...product, qty: quantity }));
     } else {
       setcartState(false);
       dispatch(removeCartItem(product));

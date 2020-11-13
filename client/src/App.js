@@ -18,6 +18,8 @@ import { Payment } from "./pages/payment";
 import { Placeorder } from "./pages/placeOrder";
 import { Orderdetail } from "./pages/orderDetail";
 import { Profile } from "./pages/profile";
+import { Userlist } from "./pages/userList";
+import { Userdetail } from "./pages/userDetail";
 AOS.init();
 
 function App() {
@@ -46,6 +48,8 @@ function App() {
       <Route path='/logIn' component={Login}/>
       <Route path='/signup' component={SignUp}/>
       <Route path='/profile' component={Profile}/>
+      <Route path='/userlist' component={Userlist}/>
+      <Route path='/userdetail/:id' component={Userdetail}/>
       <Route path='/shipping' component={Shipping}/>
       <Route path='/payment' component={Payment}/>
       <Route path='/placeorder' component={Placeorder}/>

@@ -1,0 +1,45 @@
+table {
+    width: 100%;
+  }
+  table,
+  th,
+  td {
+    border: 1px solid #dadada;
+    border-collapse: collapse;
+  }
+  td {
+    background: #e8e5e5;
+    padding: 10px 5px;
+    text-align: center;
+  }
+ 
+  .admin > svg {
+    color:  #19d619;
+    font-size: 17px;
+  }
+  .not-admin > svg {
+    transform: rotate(45deg);
+    color: red;
+    font-size: 17px;
+  }
+  .edit{
+    display: flex;
+    justify-content: space-around;
+  }
+  .edit-button {
+    font-size: 12px;
+    cursor: pointer;
+  }
+  
+  @media screen and (max-width: 710px) {
+    td {
+      font-size: 10px;
+    }
+    th {
+      font-size: 14px;
+    }
+    .detail-button {
+  font-size: 10px;
+    }
+  }
+  

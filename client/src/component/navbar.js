@@ -150,6 +150,13 @@ export default function Navbar(props) {
                   <li>
                     <Link to="/profile"> Profile </Link>
                   </li>
+                  {userInfo.isAdmin ? (
+                    <li>
+                      <Link to="/userlist">User List</Link>
+                    </li>
+                  ) : (
+                    ""
+                  )}
                   <li
                     onClick={() => {
                       dispatch(userLogout());

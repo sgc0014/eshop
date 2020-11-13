@@ -8,7 +8,7 @@ export function Profile(props) {
   const dispatch = useDispatch();
   const myOrders = useSelector((state) => state.orderList);
   const {userInfo} = useSelector((state) => state.userLogin);
-  const { userOrders } = myOrders;
+  const { userOrders,loading } = myOrders;
 
   const history = useHistory();
   useEffect(() => {
@@ -16,9 +16,9 @@ export function Profile(props) {
         history.push('/login')
     }
     dispatch(orderList());
-  }, [dispatch]);
+  }, [dispatch,userInfo]);
 
-  return (
+  return  !loading?(
     <>
       <section className="profile-container">
         {console.log(userOrders)}
@@ -65,5 +65,5 @@ export function Profile(props) {
         </main>
       </section>
     </>
-  );
+  ):<div className="loading" >Loading...</div>
 }

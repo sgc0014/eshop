@@ -16,17 +16,17 @@ export function Placeorder(props) {
   cartInfo.itemsPrice = cartItems.reduce((a, b) => a + b.qty * b.price, 0);
   cartInfo.shippingPrice = cartInfo.itemsPrice > 500 ? 0 : 50;
   cartInfo.taxPrice = Number(0.2 * cartInfo.itemsPrice).toFixed(2);
-  cartInfo.totalPrice = Number(cartInfo.itemsPrice) +
+  cartInfo.totalPrice =
+    Number(cartInfo.itemsPrice) +
     Number(cartInfo.shippingPrice) +
-    Number(cartInfo.taxPrice)
+    Number(cartInfo.taxPrice);
 
   const { loading, order, success, error } = orderCreate;
-useEffect(() => {
-  if(success){
-   
-    history.push(`/orders/${order._id}`)
-  }
-},[history,success])
+  useEffect(() => {
+    if (success) {
+      history.push(`/orders/${order._id}`);
+    }
+  }, [history, success]);
   const handleOrder = (e) => {
     e.preventDefault();
 
@@ -38,17 +38,16 @@ useEffect(() => {
         paymentMethod: cartInfo.paymentMethod,
         taxPrice: cartInfo.taxPrice,
         itemsPrice: cartInfo.itemsPrice,
-        totalPrice: cartInfo.totalPrice
+        totalPrice: cartInfo.totalPrice,
       })
     );
-if(success){
-  history.push(`/order/${orderCreate.order._id}`);
-}
-   
+    if (success) {
+      history.push(`/order/${orderCreate.order._id}`);
+    }
   };
 
   return (
-    <> 
+    <>
       <Checkoutnav step1 step2 step3 step4 />
       <div className="place-order-container">
         <div className="order-summary">
@@ -109,16 +108,22 @@ if(success){
             </div>
             <div className="order-price-item">
               <span>Total</span>
-              <span>
-                Rs{cartInfo.totalPrice}
-                
-              </span>
+              <span>Rs{cartInfo.totalPrice}</span>
             </div>
           </div>
           <div className="order-summary-button">
             <button onClick={handleOrder}>Place order</button>
           </div>
-          {error? <div style={{color:"red",textAlign:"center"}} className="order-error">{error}</div>:''} 
+          {error ? (
+            <div
+              style={{ color: "red", textAlign: "center" }}
+              className="order-error"
+            >
+              {error}
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </>

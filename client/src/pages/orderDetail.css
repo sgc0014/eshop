@@ -19,7 +19,9 @@
     padding-left: 4px;
 }
 
-
+.order-summary-header{
+  color: #3a3a3a;
+}
 .order-summary-border {
   border-bottom: 1px solid #eaeaea;
   margin-top: 25px;

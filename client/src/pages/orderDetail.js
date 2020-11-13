@@ -1,11 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Paypal } from "../component/paypal";
 import { getOrderDetail } from "../store/actions/orderAction";
 import "./orderDetail.css";
 
 export function Orderdetail(props) {
   const dispatch = useDispatch();
   const orderDetails = useSelector((state) => state.orderDetail);
+  const orderPay = useSelector((state) => state.orderPay);
+  const {success} = orderPay
   const { loading, order, error } = orderDetails;
   let itemsPrice;
   const calculatePrice = (items) => {
@@ -15,11 +18,15 @@ export function Orderdetail(props) {
 
   let shippingPrice = itemsPrice > 500 ? 50 : 0;
 
+
   const { id } = props.match.params;
   useEffect(() => {
-    console.log("orders");
-    dispatch(getOrderDetail(id));
-  }, []);
+    
+    if(!order || success){
+      dispatch(getOrderDetail(id));
+    }
+    
+  }, [dispatch,order,success]);
 
   return loading ? (
     <div>Loading...</div>
@@ -27,6 +34,7 @@ export function Orderdetail(props) {
     <div>{error}</div>
   ) : (
     <>
+    <h2>Order {order && order._id}</h2>
       <div className="place-order-container">
         <div className="order-summary">
           <header>
@@ -115,19 +123,9 @@ export function Orderdetail(props) {
               </span>
             </div>
           </div>
-          <div className="order-summary-button">
-            <button>Place order</button>
-          </div>
-          {order && order.error ? (
-            <div
-              style={{ color: "red", textAlign: "center" }}
-              className="order-error"
-            >
-              {order && order.error}
-            </div>
-          ) : (
-            ""
-          )}
+          {order && !order.isPaid?<Paypal amount={order.totalPrice} id={order._id} />:''}
+        
+        
         </div>
       </div>
     </>

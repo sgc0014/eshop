@@ -85,11 +85,12 @@ export const updateToPay = (id, paymentResult) => async (
   dispatch,
   getState
 ) => {
+  console.log(id)
   try {
     dispatch({ type: "ORDER_PAY_REQUEST" });
     const { userInfo } = getState().userLogin;
-    const { data } = await Axios.get(
-      `http://localhost:5000/api/orders/${id}/pay`,
+    const  data  = await Axios.post(
+      `http://localhost:5000/api/orders/pay/${id}`,
       paymentResult,
       {
         headers: {

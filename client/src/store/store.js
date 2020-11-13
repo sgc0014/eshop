@@ -6,8 +6,20 @@ import {
   productDetailReducer,
 } from "./reducers/productReducers";
 import { cartReducer } from "./reducers/cartReducer";
-import { userLoginReducer, userSignUpReducer } from "./reducers/userReducer";
-import { orderCreateReducer, orderDetailReducer, orderPayReducer, orderListReducer } from "./reducers/orderReducer";
+import {
+  userLoginReducer,
+  userSignUpReducer,
+  userListReducer,
+  userDeleteReducer,
+  userDetailReducer,
+  userUpdateReducer
+} from "./reducers/userReducer";
+import {
+  orderCreateReducer,
+  orderDetailReducer,
+  orderPayReducer,
+  orderListReducer,
+} from "./reducers/orderReducer";
 
 const reducer = combineReducers({
   productList: productListReducer,
@@ -17,8 +29,12 @@ const reducer = combineReducers({
   userSignUp: userSignUpReducer,
   orderCreate: orderCreateReducer,
   orderDetail: orderDetailReducer,
-  orderPay : orderPayReducer,
-  orderList: orderListReducer
+  orderPay: orderPayReducer,
+  orderList: orderListReducer,
+  userList: userListReducer,
+  userDelete: userDeleteReducer,
+  userDetail: userDetailReducer,
+  userUpdate: userUpdateReducer
 });
 const cartItemsStorage = localStorage.getItem("cartItems")
   ? JSON.parse(localStorage.getItem("cartItems"))
@@ -26,17 +42,20 @@ const cartItemsStorage = localStorage.getItem("cartItems")
 const userInfoStorage = localStorage.getItem("userInfo")
   ? JSON.parse(localStorage.getItem("userInfo"))
   : null;
-  const shippingAddressStorage = localStorage.getItem("shippingAddress")
+const shippingAddressStorage = localStorage.getItem("shippingAddress")
   ? JSON.parse(localStorage.getItem("shippingAddress"))
   : null;
-  const paymentMethodStorage = localStorage.getItem("paymentMethod")
+const paymentMethodStorage = localStorage.getItem("paymentMethod")
   ? JSON.parse(localStorage.getItem("paymentMethod"))
   : null;
 
 const initialState = {
-  cart: { cartItems: cartItemsStorage, shippingAddress: shippingAddressStorage,paymentMethod:paymentMethodStorage },
+  cart: {
+    cartItems: cartItemsStorage,
+    shippingAddress: shippingAddressStorage,
+    paymentMethod: paymentMethodStorage,
+  },
   userLogin: { userInfo: userInfoStorage },
-  
 };
 
 const middleware = [thunk];

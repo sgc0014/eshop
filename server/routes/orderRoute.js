@@ -16,9 +16,9 @@ Router.get("/myOrder",verifyToken, myOrder)
 //@access Private
 Router.get("/:id", verifyToken, getOrder);
 
-//@desc update isPaid status => /api/orders/:id/pay
+//@desc update isPaid status => /api/orders/pay/:id
 //@access Private
-Router.get("/:id/pay", verifyToken, updateTopaid);
+Router.post("/pay/:id", verifyToken, updateTopaid);
 
 
 

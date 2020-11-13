@@ -75,8 +75,8 @@ const getUserDetail = asyncHandler(async (req, res) => {
 })
 
 const deleteUser = asyncHandler(async (req, res) => {
-  const id = req.params.id;
-
+  const {id} = req.body;
+console.log("id",id)
   const user = await User.findById(id)
   if(user){
    await user.remove()
@@ -88,21 +88,22 @@ const deleteUser = asyncHandler(async (req, res) => {
   }
 })
 
-// const updateUser = asyncHandler(async (req, res) => {
-//   const id = req.params.id;
+const updateUser = asyncHandler(async (req, res) => {
+  const id = req.params.id;
 
-//   const user = await User.findById(id)
-//   if(user){
-//     user.name = req.body.name || user.name;
-//     user.email= req.body.email || user.email;
-//     user.
-//     res.status(201).json(user)
-//   }
-//   else{
-//     res.status(404)
-//     throw new Error("No such user found")
-//   }
-// })
+  const user = await User.findById(id)
+  if(user){
+    user.name = req.body.name || user.name;
+    user.email= req.body.email || user.email;
+    user.isAdmin = req.body.isAdmin;
+    await user.save()
+    res.status(201).json(user)
+  }
+  else{
+    res.status(404)
+    throw new Error("No such user found")
+  }
+})
 
 
 module.exports.signUpController = signUpController;
@@ -110,3 +111,4 @@ module.exports.logInController = logInController;
 module.exports.getAllUsers = getAllUsers;
 module.exports.getUserDetail = getUserDetail;
 module.exports.deleteUser = deleteUser;
+module.exports.updateUser = updateUser;
