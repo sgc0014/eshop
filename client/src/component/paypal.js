@@ -39,7 +39,7 @@ export function Paypal(props) {
 
   return (
     <>
-      <div ref={paypalRef} style={{marginTop:"17px"}} className="pay-button"></div>
+      <div ref={paypalRef} style={{marginTop:"13px"}} className="pay-button"></div>
     </>
   );
 }

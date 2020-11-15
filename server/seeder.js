@@ -21,6 +21,7 @@ const addData = async() => {
 }
 
 const removeData = async() => {
+    console.log("Destroy")
   await  user.deleteMany();
   await  product.deleteMany();
 }

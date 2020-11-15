@@ -70,7 +70,7 @@ const getUserDetail = asyncHandler(async (req, res) => {
   }
   else{
     res.status(404)
-    throw new Error("No such user found")
+    throw new Error("No such user found.")
   }
 })
 

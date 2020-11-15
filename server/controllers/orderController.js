@@ -20,7 +20,8 @@ const addOrderItems = asyncHandler(async (req, res) => {
       paymentMethod,
       itemsPrice,
       taxPrice,
-      shippingPrice,
+      shippingPrice
+      ,totalPrice
     });
     const orderCreated = await order.save();
     res.status(201).json(orderCreated);

@@ -9,6 +9,7 @@ import { userLogout } from "../store/actions/userAction";
 
 export default function Navbar(props) {
   const dispatch = useDispatch();
+  const {cartItems} = useSelector(state=> state.cart)
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   const [mobileNav, setmobileNav] = useState(false);
@@ -181,7 +182,7 @@ export default function Navbar(props) {
               <span className="responsive-icon">
                 <FiShoppingCart size={"1.5em"} strokeWidth={"1"} />
               </span>
-              <span className="count">0</span>
+              <span className="count"><div>{cartItems.length}</div></span>
             </li>
           </Link>
         </ul>

@@ -18,7 +18,7 @@ export function Checkoutnav({ step1, step2, step3, step4 }) {
       )}
 
       {step3 ? (
-        <div className="check-out-nav-item">Shipping</div>
+        <div className="check-out-nav-item">Payment</div>
       ) : (
         <div className="check-out-nav-item" disabled>
           Payment
@@ -26,7 +26,7 @@ export function Checkoutnav({ step1, step2, step3, step4 }) {
       )}
       
       {step4 ? (
-        <div className="check-out-nav-item">Shipping</div>
+        <div className="check-out-nav-item">Place Order</div>
       ) : (
         <div className="check-out-nav-item" disabled>
           Place Order

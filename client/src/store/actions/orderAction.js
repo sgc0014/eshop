@@ -85,7 +85,7 @@ export const updateToPay = (id, paymentResult) => async (
   dispatch,
   getState
 ) => {
-  console.log(id)
+  console.log(id,paymentResult)
   try {
     dispatch({ type: "ORDER_PAY_REQUEST" });
     const { userInfo } = getState().userLogin;
@@ -101,6 +101,7 @@ export const updateToPay = (id, paymentResult) => async (
     );
 
     dispatch({ type: "ORDER_PAY_SUCCESS", success: true });
+    dispatch({ type: "ORDER_PAY_RESET" });
   } catch (error) {
     dispatch({
       type: "ORDER_PAY_FAIL",

@@ -90,13 +90,16 @@ section {
   color: #fff;
   border-radius: 50%;
   position: absolute;
-  width: 14px;
-  height: 14px;
+  width: 17px;
+  height: 17px;
   font-size: 14px;
   text-align: center;
   line-height: 1;
   box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.3);
  
+}
+.count>div{
+  margin-top: 1px;
 }
 .hide-sm-search {
   display: none;

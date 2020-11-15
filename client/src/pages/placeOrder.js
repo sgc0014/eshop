@@ -10,6 +10,7 @@ export function Placeorder(props) {
   const history = useHistory();
   const cartInfo = useSelector((state) => state.cart);
   const orderCreate = useSelector((state) => state.orderCreate);
+  const {userInfo} = useSelector((state) => state.userLogin);
   const { cartItems, shippingAddress, paymentMethod } = cartInfo;
 
   // calculate price
@@ -23,6 +24,9 @@ export function Placeorder(props) {
 
   const { loading, order, success, error } = orderCreate;
   useEffect(() => {
+    if(!userInfo){
+      history.push('/login')
+    }
     if (success) {
       history.push(`/orders/${order._id}`);
     }
@@ -48,7 +52,7 @@ export function Placeorder(props) {
 
   return (
     <>
-      <Checkoutnav step1 step2 step3 step4 />
+      <Checkoutnav step1 step2 step3 step4 />{console.log(cartInfo)}
       <div className="place-order-container">
         <div className="order-summary">
           <header>
@@ -71,9 +75,9 @@ export function Placeorder(props) {
           </header>
           <div className="order-summary-info">
             <ul className="order-items-list">
-              {cartItems.map((item) => (
+              {cartItems.map((item, i=item.id) => (
                 <>
-                  <li className="order-item">
+                  <li className="order-item" key={i}>
                     <img
                       className="order-item-img"
                       src={`/products/${item.img}`}
@@ -103,7 +107,7 @@ export function Placeorder(props) {
               <span>Rs{cartInfo.shippingPrice}</span>
             </div>
             <div className="order-price-item">
-              <span>taxPricees</span>
+              <span>taxPrice</span>
               <span>Rs{cartInfo.taxPrice}</span>
             </div>
             <div className="order-price-item">

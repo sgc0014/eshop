@@ -18,7 +18,7 @@ export function Profile(props) {
     dispatch(orderList());
   }, [dispatch,userInfo]);
 
-  return  !loading?(
+  return  !loading?userOrders?(
     <>
       <section className="profile-container">
         {console.log(userOrders)}
@@ -65,5 +65,5 @@ export function Profile(props) {
         </main>
       </section>
     </>
-  ):<div className="loading" >Loading...</div>
+  ):"No any orders made":<div className="loading" >Loading...</div>
 }

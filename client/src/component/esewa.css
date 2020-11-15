@@ -1,0 +1,9 @@
+.esewa-button>img{
+    max-width: 92px;
+}
+.esewa-button{
+    border: none;
+    background: #47ad47;
+    width: 100%;
+    border-radius: 6px
+}

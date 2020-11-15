@@ -1,5 +1,7 @@
+import Axios from "axios";
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Esewa } from "../component/esewa";
 import { Paypal } from "../component/paypal";
 import { getOrderDetail } from "../store/actions/orderAction";
 import "./orderDetail.css";
@@ -8,7 +10,7 @@ export function Orderdetail(props) {
   const dispatch = useDispatch();
   const orderDetails = useSelector((state) => state.orderDetail);
   const orderPay = useSelector((state) => state.orderPay);
-  const {success} = orderPay
+  const { success } = orderPay;
   const { loading, order, error } = orderDetails;
   let itemsPrice;
   const calculatePrice = (items) => {
@@ -16,17 +18,16 @@ export function Orderdetail(props) {
     return itemsPrice;
   };
 
-  let shippingPrice = itemsPrice > 500 ? 50 : 0;
+  let shippingPrice = itemsPrice < 500 ? 50 : 0;
 
-
-  const { id } = props.match.params;
   useEffect(() => {
-    
-    if(!order || success){
-      dispatch(getOrderDetail(id));
+    if (!order || success) {
+      dispatch(getOrderDetail(props.match.params.id));
     }
-    
-  }, [dispatch,order,success]);
+    if (order && props.match.params.id !== order._id) {
+      dispatch(getOrderDetail(props.match.params.id));
+    }
+  }, [dispatch, props.match.params.id, success]);
 
   return loading ? (
     <div>Loading...</div>
@@ -34,7 +35,7 @@ export function Orderdetail(props) {
     <div>{error}</div>
   ) : (
     <>
-    <h2>Order {order && order._id}</h2>
+      <h2>Order {order && order._id}</h2>
       <div className="place-order-container">
         <div className="order-summary">
           <header>
@@ -119,13 +120,18 @@ export function Orderdetail(props) {
               <span>Total</span>
               <span>
                 Rs
-                {order && Number(itemsPrice + shippingPrice + order.taxPrice)}
+                {order && Number(order.totalPrice)}
               </span>
             </div>
           </div>
-          {order && !order.isPaid?<Paypal amount={order.totalPrice} id={order._id} />:''}
-        
-        
+          {order && !order.isPaid ? (
+            <>
+              <Esewa amount={order.totalPrice} id={order._id} />
+              <Paypal amount={order.totalPrice} id={order._id} />
+            </>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </>

@@ -12,8 +12,10 @@ export function Productdetail(props) {
   const { cartItems } = cart;
 
   useEffect(() => {
-    dispatch(productDetail(props.match.params.id));
-    const exist = cartItems.find((x) => x._id === product._id);
+
+      dispatch(productDetail(props.match.params.id));
+    
+    const exist = cartItems.find((x) => x._id === props.match.params.id);
     if (exist) {
       setcartState(true);
     }
