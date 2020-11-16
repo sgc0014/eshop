@@ -16,6 +16,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
     );
 
     dispatch({ type: "ORDER_CREATE_SUCCESS", payload: data });
+    localStorage.removeItem("cartItems");
   } catch (error) {
     dispatch({
       type: "ORDER_CREATE_FAIL",
@@ -85,7 +86,7 @@ export const updateToPay = (id, paymentResult) => async (
   dispatch,
   getState
 ) => {
-  console.log(id,paymentResult)
+ 
   try {
     dispatch({ type: "ORDER_PAY_REQUEST" });
     const { userInfo } = getState().userLogin;
@@ -112,3 +113,36 @@ export const updateToPay = (id, paymentResult) => async (
     });
   }
 };
+
+export const verifyEsewa = (paymentResult) => async (
+  dispatch,
+  getState
+) => {
+ 
+  try {
+   
+    const { userInfo } = getState().userLogin;
+    const  data  = await Axios.post(
+      `http://localhost:5000/api/orders/pay/verify`,
+      paymentResult,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      }
+    );
+
+    dispatch({ type: "ORDER_PAY_SUCCESS", success: true });
+    dispatch({ type: "ORDER_PAY_RESET" });
+  } catch (error) {
+    dispatch({
+      type: "ORDER_PAY_FAIL",
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+

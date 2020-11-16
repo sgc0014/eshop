@@ -52,3 +52,14 @@ export const orderListReducer = (state={},action) => {
             return state
     }
 }
+
+export const esewaVerifyReducer = (state={},action) => {
+    switch(action.type){ 
+        case "ESEWA_VERIFY":
+             return {...state,verify:action.payload}
+ 
+        default:
+            return state
+    }
+}
+
