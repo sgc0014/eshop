@@ -1,0 +1,10 @@
+.delivered-button{
+    width: 100%;
+    background: #56cfe1;
+    border: #56cfe1;
+    height: 28px;
+    color: #fff;
+    margin-top: 13px;
+    cursor: pointer;
+
+}

@@ -152,9 +152,14 @@ export default function Navbar(props) {
                     <Link to="/profile"> Profile </Link>
                   </li>
                   {userInfo.isAdmin ? (
+                    <>
                     <li>
                       <Link to="/userlist">User List</Link>
                     </li>
+                    <li>
+                      <Link to="/admin/orderlist">Order List</Link>
+                    </li>
+                    </>
                   ) : (
                     ""
                   )}

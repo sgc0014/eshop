@@ -3,22 +3,26 @@ import "./profile.css";
 import {FiPlus} from 'react-icons/fi'
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { orderList } from "../store/actions/orderAction";
-export function Profile(props) {
+import { allOrderList, orderList } from "../store/actions/orderAction";
+
+export function AdminOrderList(props) {
   const dispatch = useDispatch();
-  const myOrders = useSelector((state) => state.orderList);
+  const allOrder = useSelector((state) => state.allOrder);
   const {userInfo} = useSelector((state) => state.userLogin);
-  const { userOrders,loading } = myOrders;
+  const { order,loading } = allOrder;
 
   const history = useHistory();
   useEffect(() => {
-    if(!userInfo){
-        history.push('/login')
+    if(userInfo && userInfo.isAdmin){
+        dispatch(allOrderList());
     }
-    dispatch(orderList());
+    else{
+        history.push("/")
+    }
+    
   }, [dispatch,userInfo]);
 
-  return  !loading?userOrders?(
+  return  !loading?order?(
     <>
       <section className="profile-container">
       
@@ -36,8 +40,8 @@ export function Profile(props) {
               <th>Delivered</th>
               <th>Detail</th>
             </tr>
-            {userOrders &&
-              userOrders.map((order) => (
+            {order &&
+              order.map((order) => (
                 <tr>
                   <td>{order._id}</td>
                   <td>{order.createdAt.substring(0, 10)}</td>
@@ -47,13 +51,13 @@ export function Profile(props) {
                   ) : (
                     <td className="paid">Paid</td>
                   )}
-                  {!order.isDelievered ? (
+                  {!order.isDelivered ? (
                     <td className="not-delivered"><FiPlus/></td>
                   ) : (
                     <td className="delivered">Delivered</td>
                   )}
                   <td className="detail">
-                      <Link to={`/orders/${order._id}`}>
+                      <Link to={`orders/${order._id}`}>
                     <button className="detail-button">Detail</button>
                     </Link>
                   </td>

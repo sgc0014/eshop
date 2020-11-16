@@ -18,7 +18,9 @@ import {
   orderCreateReducer,
   orderDetailReducer,
   orderPayReducer,
+  orderDeliveredReducer,
   orderListReducer,
+  allOrderReducer,
   esewaVerifyReducer
 } from "./reducers/orderReducer";
 
@@ -31,7 +33,9 @@ const reducer = combineReducers({
   orderCreate: orderCreateReducer,
   orderDetail: orderDetailReducer,
   orderPay: orderPayReducer,
+  orderDelivered: orderDeliveredReducer,
   orderList: orderListReducer,
+  allOrder:allOrderReducer,
   userList: userListReducer,
   userDelete: userDeleteReducer,
   userDetail: userDetailReducer,

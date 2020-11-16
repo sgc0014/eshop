@@ -22,6 +22,8 @@ import { Userlist } from "./pages/userList";
 import { Userdetail } from "./pages/userDetail";
 import { Esewasuccess } from "./component/esewaSuccess";
 import { Esewafail } from "./component/esewaFail";
+import { AdminOrderList } from "./pages/adminOrderList";
+import { Adminorderdetail } from "./pages/adminOrderDetail";
 AOS.init();
 
 function App() {
@@ -56,9 +58,10 @@ function App() {
       <Route path='/payment' component={Payment}/>
       <Route path='/esewa/fail' component={Esewafail}/>
       <Route path='/esewa/success' component={Esewasuccess}/>
-  
       <Route path='/placeorder' component={Placeorder}/>
       <Route path='/orders/:id' component={Orderdetail}/>
+      <Route path='/admin/orderlist' component={AdminOrderList}/>
+      <Route path='/admin/orders/:id' component={Adminorderdetail}/>
     </Switch>
     </Router>
     </div>

@@ -31,6 +31,18 @@ const addOrderItems = asyncHandler(async (req, res) => {
   }
 });
 
+const getAllOrder = asyncHandler(async (req, res) => {
+
+  const orderSelcted = await Order.find();
+  if (orderSelcted) {
+    res.status(201).json(orderSelcted);
+  } else {
+    res.status(400);
+    throw new Error("No such order found");
+  }
+});
+
+
 const getOrder = asyncHandler(async (req, res) => {
   const id = req.params.id;
 
@@ -75,8 +87,24 @@ const updateTopaid = asyncHandler(async (req, res) => {
     throw new Error("No such order found");
   }
 });
+const updateToDelivered = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+
+  const orderSelcted = await Order.findById(id);
+  if (orderSelcted) {
+    orderSelcted.isDelivered = true;
+    orderSelcted.isDeliveredAt = Date.now();
+    const updatedOrder = await orderSelcted.save();
+    res.status(201).json(updatedOrder);
+  } else {
+    res.status(400);
+    throw new Error("No such order found");
+  }
+});
 
 module.exports.addOrderItems = addOrderItems;
 module.exports.getOrder = getOrder;
 module.exports.updateTopaid = updateTopaid;
 module.exports.myOrder = myOrder;
+module.exports.getAllOrder = getAllOrder;
+module.exports.updateToDelivered = updateToDelivered;

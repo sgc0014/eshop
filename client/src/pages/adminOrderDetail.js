@@ -4,16 +4,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Esewa } from "../component/esewa";
 import { Paypal } from "../component/paypal";
-import { getOrderDetail } from "../store/actions/orderAction";
+import {
+  getOrderDetail,
+  updateToDelivered,
+} from "../store/actions/orderAction";
+import "./adminOrderDetail.css";
 import "./orderDetail.css";
 
-export function Orderdetail(props) {
+export function Adminorderdetail(props) {
   const dispatch = useDispatch();
   const history = useHistory();
   const orderDetails = useSelector((state) => state.orderDetail);
-  const orderPay = useSelector((state) => state.orderPay);
-  const {userInfo} = useSelector((state) => state.userLogin);
-  const { success } = orderPay;
+  const orderDelivered = useSelector((state) => state.orderDelivered);
+  const { userInfo } = useSelector((state) => state.userLogin);
+  const { success } = orderDelivered;
   const { loading, order, error } = orderDetails;
   let itemsPrice;
   const calculatePrice = (items) => {
@@ -24,19 +28,22 @@ export function Orderdetail(props) {
   let shippingPrice = itemsPrice < 500 ? 50 : 0;
 
   useEffect(() => {
-   if(!userInfo){
-     history.push("/login")
-   }
-   else{
-    if (!order || success) {
-      dispatch(getOrderDetail(props.match.params.id));
+    if (!userInfo && !userInfo.isAdmin) {
+      history.push("/login");
+    } else {
+      if (!order || success) {
+        dispatch(getOrderDetail(props.match.params.id));
+      }
+      if (order && props.match.params.id !== order._id) {
+        dispatch(getOrderDetail(props.match.params.id));
+      }
     }
-    if (order && props.match.params.id !== order._id) {
-      dispatch(getOrderDetail(props.match.params.id));
-    }
-   }
-  
-  }, [dispatch, props.match.params.id, success,userInfo]);
+  }, [dispatch, props.match.params.id, success, userInfo]);
+
+  const markDelivered = (e) => {
+    e.preventDefault();
+    dispatch(updateToDelivered(props.match.params.id));
+  };
 
   return loading ? (
     <div>Loading...</div>
@@ -133,15 +140,9 @@ export function Orderdetail(props) {
               </span>
             </div>
           </div>
-          {order && !order.isPaid ? (
-            <>
-              <Esewa amount={order.totalPrice} id={order._id} />
-              <Paypal amount={order.totalPrice} id={order._id} />
-            </>
-          ) : (
-            ""
-          )}
-        
+          <div>
+            <button className="delivered-button" onClick={markDelivered}>Mark as Delivered</button>
+          </div>
         </div>
       </div>
     </>
