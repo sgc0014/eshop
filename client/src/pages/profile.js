@@ -37,8 +37,8 @@ export function Profile(props) {
               <th>Detail</th>
             </tr>
             {userOrders &&
-              userOrders.map((order) => (
-                <tr>
+              userOrders.map((order,i=order._id) => (
+                <tr key={i}>
                   <td>{order._id}</td>
                   <td>{order.createdAt.substring(0, 10)}</td>
                   <td>{order.totalPrice}</td>

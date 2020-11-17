@@ -9,7 +9,7 @@ export function Cart(props) {
   const { cartItems } = cart;
   const [sum, setsum] = useState(0);
   const [cartstore, setcartstore] = useState();
-  const [deliveryCharge, setdeliveryCharge] = useState(100);
+  const deliveryCharge = sum > 500 ? 0 : 50;
 
   const setTotal = () => {
     setsum(cartItems.reduce((a, b) => a + b.price * b.qty, 0));

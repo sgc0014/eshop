@@ -6,26 +6,29 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import "./userList.css";
 import { getuserList, userdelete } from "../store/actions/userAction";
-export function Userlist(props) {
+import { listProducts, productdelete } from "../store/actions/productActions";
+
+
+export function Adminproductlist(props) {
   const dispatch = useDispatch();
-  const users = useSelector((state) => state.userList);
+  const productList = useSelector((state) => state.productList);
   const { userInfo } = useSelector((state) => state.userLogin);
-  const { userList } = users;
+const {products} = productList
 
   const history = useHistory();
   useEffect(() => {
     if (!userInfo || !userInfo.isAdmin) {
       history.push("/login");
     }
-    dispatch(getuserList());
+    dispatch(listProducts());
   }, [dispatch,userInfo]);
 
   return (
     <>
       <section className="userList-container">
-        {console.log(userList)}
+        
         <header>
-          <h2>Users</h2>
+          <h2>Products</h2>
         </header>
 
         <main className="users-container">
@@ -33,28 +36,20 @@ export function Userlist(props) {
             <tr>
               <th>Id</th>
               <th>Name</th>
-              <th>Email</th>
-              <th>Admin</th>
+              <th>Price</th>
+              <th>Category</th>
+              <th>Brand</th>
               <th></th>
             </tr>
-            {userList &&
-              userList.map((user,i=user._id) => (
+            {products &&
+              products.map((product,i=product._id) => (
                 <tr key={i}>
-                  <td>{user._id}</td>
-                  <td>{user.name}</td>
-                  <td>{user.email}</td>
-                  {!user.isAdmin ? (
-                    <td className="not-admin">
-                      <FiPlus />
-                    </td>
-                  ) : (
-                    <td className="admin">
-                      <TiTick />
-                    </td>
-                  )}
-
+                  <td>{product._id}</td>
+                  <td>{product.name}</td>
+                  <td>{product.price}</td>
+                  <td>{product.brand}</td>              
                   <td className="edit">
-                    <Link to={`/userDetail/${user._id}`}>
+                    <Link to={`/admin/productdetail/${product._id}`}>
                       <FiEdit />
                     </Link>
 
@@ -62,7 +57,7 @@ export function Userlist(props) {
                     style={{cursor:"pointer"}}
                       onClick={(e) => {
                         e.preventDefault();
-                        dispatch(userdelete(user._id));
+                        dispatch(productdelete(product._id));
                       }}
                     />
                   </td>

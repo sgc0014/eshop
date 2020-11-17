@@ -14,7 +14,7 @@ export function Userdetail(props) {
   const [userEmail, setuserEmail] = useState("");
   const [userName, setuserName] = useState("");
   const [userAdmin, setuserAdmin] = useState("");
-  const userDetails = userDetail.userDetails;
+  const {userDetails} = userDetail;
   const { loading, error, success } = userDetail;
   useEffect(() => {
     if (updateSuccess) {

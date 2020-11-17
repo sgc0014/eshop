@@ -76,7 +76,7 @@ const getUserDetail = asyncHandler(async (req, res) => {
 
 const deleteUser = asyncHandler(async (req, res) => {
   const {id} = req.body;
-console.log("id",id)
+
   const user = await User.findById(id)
   if(user){
    await user.remove()

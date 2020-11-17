@@ -159,6 +159,9 @@ export default function Navbar(props) {
                     <li>
                       <Link to="/admin/orderlist">Order List</Link>
                     </li>
+                    <li>
+                      <Link to="/admin/productlist">Product List</Link>
+                    </li>
                     </>
                   ) : (
                     ""

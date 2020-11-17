@@ -41,8 +41,8 @@ export function AdminOrderList(props) {
               <th>Detail</th>
             </tr>
             {order &&
-              order.map((order) => (
-                <tr>
+              order.map((order,i=order._id) => (
+                <tr key={i}>
                   <td>{order._id}</td>
                   <td>{order.createdAt.substring(0, 10)}</td>
                   <td>{order.totalPrice}</td>
