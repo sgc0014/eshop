@@ -1,9 +1,64 @@
 import Axios from "axios";
 
-export const listProducts = () => async (dispatch) => {
+
+export const createProduct = (product) => async (dispatch, getState) => {
+  
+    try {
+      
+      dispatch({ type: "PRODUCT_CREATE_REQUEST" });
+      const { userInfo } = getState().userLogin;
+  
+      const { data } = await Axios.post(
+        `http://localhost:5000/api/products/create`,
+        product
+        ,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${userInfo.token}`,
+          },
+        }
+      );
+      dispatch({
+        type: "PRODUCT_CREATE_SUCCESS",
+      });
+     
+      dispatch({
+        type: "PRODUCT_CREATE_RESET",
+      });
+  
+      
+    } catch (error) {
+      dispatch({
+        type: "PRODUCT_CREATE_FAIL",
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+
+export const listProducts = (keyword='') => async (dispatch) => {
   try {
     dispatch({ type: "PRODUCT_LIST_REQUEST" });
-    const { data } = await Axios.get("http://localhost:5000/api/products/");
+    const { data } = await Axios.post(`http://localhost:5000/api/products?keyword=${keyword}`);
+   
+    dispatch({
+      type: "PRODUCT_LIST_SUCCESS",
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({ type: "PRODUCT_LIST_FAIL",  payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message, });
+  }
+};
+export const filterProducts = () => async (dispatch) => {
+  try {
+    dispatch({ type: "PRODUCT_LIST_REQUEST" });
+    const { data } = await Axios.get(`http://localhost:5000/api/products`);
    
     dispatch({
       type: "PRODUCT_LIST_SUCCESS",
@@ -33,17 +88,16 @@ export const productDetail = (id) => async (dispatch) => {
 };
 
 export const postproductUpdate = (product) => async (dispatch, getState) => {
-
+console.log(product)
   try {
     
     dispatch({ type: "PRODUCT_UPDATE_REQUEST" });
     const { userInfo } = getState().userLogin;
-
+    console.log(userInfo.token)
     const { data } = await Axios.post(
       `http://localhost:5000/api/products/updateproduct/${product.id}`,
       product
       ,
-
       {
         headers: {
           "Content-Type": "application/json",

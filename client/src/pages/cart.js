@@ -35,7 +35,7 @@ export function Cart(props) {
                 <div className="cart-product-img-container">
                   <img
                     className="cart-product-img"
-                    src={`/products/${product.img}`}
+                    src={`${product.img}`}
                   />
                 </div>
                 <div className="cart-product-quantity">

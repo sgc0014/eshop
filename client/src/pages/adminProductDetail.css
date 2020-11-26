@@ -1,0 +1,29 @@
+.image-edit{
+    display: flex;
+    flex-direction: column;
+    margin-top: 24px;
+   
+}
+.image-edit>label{
+    margin-bottom: 6px;
+}
+
+.image-edit>input{
+    height: 27px;
+    background: #f1f0f0;
+    border: 1px #f1f0f0;
+    outline: none;
+    padding: 5px;
+}
+.add-img-input{
+    display: none;
+}
+
+.upload-button{
+    margin-top: 6px;
+    background: #56cfe1;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+}

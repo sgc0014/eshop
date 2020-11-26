@@ -3,12 +3,13 @@ import "../App.css";
 import React, { useState } from "react";
 import logo from "../assets/logo2.png";
 import { FiUser, FiSearch, FiShoppingCart, FiHeart } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, Route, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogout } from "../store/actions/userAction";
 
 export default function Navbar(props) {
   const dispatch = useDispatch();
+  const history = useHistory();
   const {cartItems} = useSelector(state=> state.cart)
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -34,8 +35,12 @@ export default function Navbar(props) {
   });
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    setsearchTerm("");
+    console.log(searchTerm)
+    if(searchTerm){
+      history.push(`/search/${searchTerm}`)
+      setsearchTerm("");
+    }
+    
   };
 
   return (
@@ -85,11 +90,14 @@ export default function Navbar(props) {
               alignItems: "center",
             }}
           >
+            <form onSubmit={handleSubmit}>
             <input
               placeholder="search..."
               style={{ background: "#e8e8e8", border: "none", outline: "none" }}
+              onChange={(e) =>{setsearchTerm(e.target.value)}}
             ></input>
-            <FiSearch size={"1.5em"} strokeWidth={"1"} />
+            <FiSearch size={"1.5em"} strokeWidth={"1"} type="submit" />
+            </form>
           </li>
           {/* phone search */}
           <li
@@ -125,6 +133,7 @@ export default function Navbar(props) {
               }}
               value={searchTerm}
               onChange={(e) => {
+               
                 setsearchTerm(e.target.value);
               }}
             ></input>

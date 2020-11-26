@@ -7,23 +7,23 @@ import "./men.css";
 import { listProducts } from "../store/actions/productActions";
 import { useDispatch, useSelector } from "react-redux";
 
+
 export function Men(props) {
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
   const { error, loading, products } = productList;
+ 
 
   useEffect(() => {
-    dispatch(listProducts());
-  }, [dispatch]);
+    if (!products) {
+      dispatch(listProducts());
+    }
+  }, [dispatch,]);
 
   const [filterList, setFilterlist] = useState([
     {
       header: "category",
       options: ["Tshirt", "Shirt", "Jeans"],
-    },
-    {
-      header: "Size",
-      options: ["XS", "S", "M", "L", "XL"],
     },
     {
       header: "Sort By",
@@ -36,8 +36,8 @@ export function Men(props) {
   ]);
   const [filter, setFilter] = useState({
     category: "",
-    size: "",
     gender: "",
+    sort: "",
   });
 
   const [dropdownState, setdropdownState] = useState(false);
@@ -46,35 +46,22 @@ export function Men(props) {
     if (header.toLowerCase() === "category") {
       if (filter.category === option) {
         filter.category = "";
-
-       
       } else {
         filter.category = option;
-       
       }
     }
-    if (header.toLowerCase() === "size") {
-      if (filter.size === option) {
-        filter.size = "";
-       
-      } else {
-        filter.size = option;
-       
-      }
-    }
+
     if (header.toLowerCase() === "gender") {
       if (filter.gender === option) {
         filter.gender = "";
-       
       } else {
         filter.gender = option;
-       
       }
     }
     filterChange();
   };
   const filterChange = () => {
-     // let filterredProduct = productList.filter(
+    // let filterredProduct = productList.filter(
     //   (product) =>
     //     filter.category.toLowerCase() === product.category.toLowerCase()
     // );
@@ -83,7 +70,7 @@ export function Men(props) {
   return loading ? (
     <h2>Loading...</h2>
   ) : error ? (
-    <h2>{error.message}</h2>
+    <h2>{error}</h2>
   ) : (
     <section className="men-section">
       <div className="header">
@@ -95,59 +82,28 @@ export function Men(props) {
           <div className="filter-container">
             <header className="filter-header">filter</header>
             <main>
-              {filterList.map((filter,i) => (
-                <section className="filter-dropdown"key={i}>
-                  <header
-                    className="filter-option-header"
-                    onClick={() => {
-                      setdropdownState(!dropdownState);
-                    }}
-                  >
-                    <span>{filter.header}</span>
-                    {dropdownState ? (
-                      <span>
-                        <IoIosArrowDown className="open" />
-                      </span>
-                    ) : (
-                      <span>
-                        <IoIosArrowDown className="hide" />
-                      </span>
-                    )}
-                  </header>
-                  <ul
-                    className={
-                      dropdownState
-                        ? "dropdown-options"
-                        : "dropdown-options dropdown-options-hide"
-                    }
-                  >
-                    {filter.options.map((option,i) => (
-                      <li
-                        className="option"
-                        key={i}
-                        value={option}
-                        onClick={() => selected(option, filter.header)}
-                      >
-                        {option}
-                      </li>
-                    ))}
-                  </ul>
-                </section>
+              {filterList.map((filter, i) => (
+                <Dropdown
+                  key={i}
+                  header={filter.header}
+                  options={filter.options}
+                />
               ))}
             </main>
           </div>
         </div>
         <div className="right">
           <div className="products-container">
-            {products.map((product,i=product._id) => (
-              <Product
-                name={product.name}
-                price={product.price}
-                img={product.img}
-                id={product._id}
-                key={i}
-              />
-            ))}
+            {products &&
+              products.products.map((product, i = product._id) => (
+                <Product
+                  name={product.name}
+                  price={product.price}
+                  img={product.img}
+                  id={product._id}
+                  key={i}
+                />
+              ))}
           </div>
         </div>
       </main>

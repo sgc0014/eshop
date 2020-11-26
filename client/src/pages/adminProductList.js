@@ -1,11 +1,9 @@
 import React, { useEffect } from "react";
-import { FiPlus, FiEdit } from "react-icons/fi";
-import { TiTick } from "react-icons/ti";
+import { FiEdit } from "react-icons/fi";
 import { MdDelete } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import "./userList.css";
-import { getuserList, userdelete } from "../store/actions/userAction";
 import { listProducts, productdelete } from "../store/actions/productActions";
 
 
@@ -13,17 +11,20 @@ export function Adminproductlist(props) {
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
   const { userInfo } = useSelector((state) => state.userLogin);
-const {products} = productList
+const {products,loading} = productList
 
   const history = useHistory();
   useEffect(() => {
     if (!userInfo || !userInfo.isAdmin) {
       history.push("/login");
     }
-    dispatch(listProducts());
+    
+      dispatch(listProducts());
+    
+    
   }, [dispatch,userInfo]);
 
-  return (
+  return !loading?(
     <>
       <section className="userList-container">
         
@@ -42,11 +43,12 @@ const {products} = productList
               <th></th>
             </tr>
             {products &&
-              products.map((product,i=product._id) => (
+              products.products.map((product,i=product._id) => (
                 <tr key={i}>
                   <td>{product._id}</td>
                   <td>{product.name}</td>
                   <td>{product.price}</td>
+                  <td>{product.category}</td>
                   <td>{product.brand}</td>              
                   <td className="edit">
                     <Link to={`/admin/productdetail/${product._id}`}>
@@ -67,5 +69,5 @@ const {products} = productList
         </main>
       </section>
     </>
-  );
+  ):"Loading...";
 }

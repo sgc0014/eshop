@@ -26,6 +26,8 @@ import { AdminOrderList } from "./pages/adminOrderList";
 import { Adminorderdetail } from "./pages/adminOrderDetail";
 import { Adminproductlist } from "./pages/adminProductList";
 import { Adminproductdetail } from "./pages/adminProductDetail";
+import  AdminCreateProduct from "./pages/adminCreateProduct";
+import { SearchResult } from "./pages/searchResult";
 AOS.init();
 
 function App() {
@@ -65,7 +67,9 @@ function App() {
       <Route path='/admin/orderlist' component={AdminOrderList}/>
       <Route path='/admin/productlist' component={Adminproductlist}/>
       <Route path='/admin/productdetail/:id' component={Adminproductdetail}/>
+      <Route path='/admin/createproduct' component={AdminCreateProduct}/>
       <Route path='/admin/orders/:id' component={Adminorderdetail}/>
+      <Route path='/search/:keyword' component={SearchResult}/>
     </Switch>
     </Router>
     </div>

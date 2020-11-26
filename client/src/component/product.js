@@ -9,7 +9,7 @@ export default function Product(props) {
   return (
     <div className="product-container">
       <div className="image-container">
-        <img src={`/products/${img}`} alt="" />
+        <img src={`${img}`} alt="" />
         <div className="hover-card">
           <span
             onClick={() => {

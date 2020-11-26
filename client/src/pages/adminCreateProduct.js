@@ -4,17 +4,18 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   productDetail,
   postproductUpdate,
+  createProduct,
 } from "../store/actions/productActions";
 import { useHistory } from "react-router-dom";
 import {FiUpload} from 'react-icons/fi';
 import Axios from "axios";
 
-export function Adminproductdetail(props) {
+export default function AdminCreateProduct(props) {
   const dispatch = useDispatch();
   const history = useHistory();
   const productId = props.match.params.id;
-  const productDetails = useSelector((state) => state.productDetail);
-  const productUpdate = useSelector((state) => state.productUpdate);
+  const {userInfo} = useSelector((state) => state.userLogin);
+  const productCreate = useSelector((state) => state.productCreate);
   const [name, setname] = useState(" ");
   const [brand, setbrand] = useState(" ");
   const [category, setcategory] = useState(" ");
@@ -24,28 +25,13 @@ export function Adminproductdetail(props) {
   const [description, setdescription] = useState(" ");
   const [img, setimg] = useState(" ");
   const [uploading, setuploading] = useState(false)
+  const { loading, error, success } = productCreate;
 
-  const { product } = productDetails;
-  const { loading, error, success: updateSuccess } = productUpdate;
-  useEffect(() => {
-    if (updateSuccess) {
-      history.push("/admin/productlist");
-    }
-    if (!product) {
-      dispatch(productDetail(productId));
-    } else {
-    
-      setname(product.name);
-      setprice(product.price);
-      setbrand(product.brand);
-      setcategory(product.category);
-      setcountinstock(product.countInStock);
-      setdescription(product.description);
-      setgender(product.gender);
-      setimg(product.img);
-    }
-  }, [dispatch, productId, product, updateSuccess]);
-
+useEffect(() => {
+  if(!userInfo.isAdmin){
+    history.push('/login')
+  }
+},[dispatch,userInfo])
   const addImgRef = useRef();
 
   const clickUpload = (e) => {
@@ -81,9 +67,10 @@ export function Adminproductdetail(props) {
     e.preventDefault();
   
     dispatch(
-      postproductUpdate({
+      createProduct({
         id: productId,
         name: name,
+        user:userInfo.id,
         category: category,
         price: Number(price),
         img: img,
@@ -93,12 +80,15 @@ export function Adminproductdetail(props) {
         brand: brand,
       })
     );
+    if(success){
+      history.push('/admin/productlist')
+    }
   };
-  return !loading ? (
+  return !loading?<h3>loading...</h3>:error?<h3>{error}</h3>: (
     <>
       <section className="form-container">{console.log(img)}
         <header>
-          <h2>Edit Info</h2>
+          <h2>Create Product</h2>
         </header>
 
         <form className="main-form" onSubmit={handleSubmit}>
@@ -124,7 +114,7 @@ export function Adminproductdetail(props) {
               value={img || ""}
             ></input>
             <input ref={addImgRef} className="add-img-input" type="file" onChange={handleUpload}/>
-            <button className="upload-button" onClick={clickUpload}><FiUpload/></button>
+            <button className="upload-button" onClick={clickUpload} disabled={uploading}><FiUpload/></button>
             </div>
 
             <label htmlFor="price">Price:</label>
@@ -147,6 +137,7 @@ export function Adminproductdetail(props) {
               value={brand || ""}
             />
             <label htmlFor="category">Category:</label>
+           
             <input
               onChange={(e) => {
                 setcategory(e.target.value);
@@ -163,7 +154,7 @@ export function Adminproductdetail(props) {
               value={gender || ""}
               onChange={(e) => {
                 setgender(e.target.value);
-                console.log(gender)
+               
               }}
             >
               <option
@@ -206,11 +197,9 @@ export function Adminproductdetail(props) {
               value={description || ""}
             />
           </div>
-          <button className="form-button">Update</button>
+          <button className="form-button">Create</button>
         </form>
       </section>
     </>
-  ) : (
-    "Loading"
-  );
+  )
 }

@@ -11,6 +11,7 @@ const addData = async() => {
     await  user.deleteMany();
     await  product.deleteMany();
     const userAdded = await user.insertMany(userData)
+    console.log(productData)
     console.log(userAdded[0].id)
     const productSample = productData.map(product => {return{...product,user:userAdded[0]._id}})
     await product.insertMany(productSample)

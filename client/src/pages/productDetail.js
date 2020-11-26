@@ -12,9 +12,9 @@ export function Productdetail(props) {
   const { cartItems } = cart;
 
   useEffect(() => {
+   
+    dispatch(productDetail(props.match.params.id));
 
-      dispatch(productDetail(props.match.params.id));
-    
     const exist = cartItems.find((x) => x._id === props.match.params.id);
     if (exist) {
       setcartState(true);
@@ -34,14 +34,14 @@ export function Productdetail(props) {
       dispatch(removeCartItem(product));
     }
   };
-  return loading ? (
+  return !product ? (
     <h2>Loading...</h2>
   ) : error ? (
     <h2>{error.message}</h2>
   ) : (
     <section className="product-detail-container">
       <div className="product-detail-image-container">
-        <img src={`/products/${product.img}`} />
+        <img src={`${product.img}`} />
       </div>
 
       <div className="product-info">
