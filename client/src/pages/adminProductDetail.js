@@ -23,9 +23,19 @@ export function Adminproductdetail(props) {
   const [countinstock, setcountinstock] = useState("");
   const [description, setdescription] = useState(" ");
   const [img, setimg] = useState(" ");
+  const categoryList = [
+    "tshirt",
+    "shirt",
+    "jeans",
+    "casual footwear",
+    "sport footwear",
+    "bags",
+    "mobile Cover",
+  ];
+  const genderList = ["male", "female"];
   const [uploading, setuploading] = useState(false)
-
-  const { product } = productDetails;
+const [uploadErr, setuploadErr] = useState("")
+  const { product, detailLoading } = productDetails;
   const { loading, error, success: updateSuccess } = productUpdate;
   useEffect(() => {
     if (updateSuccess) {
@@ -43,6 +53,7 @@ export function Adminproductdetail(props) {
       setdescription(product.description);
       setgender(product.gender);
       setimg(product.img);
+      
     }
   }, [dispatch, productId, product, updateSuccess]);
 
@@ -72,7 +83,7 @@ export function Adminproductdetail(props) {
       
       setuploading(false)
     } catch (error) {
-      console.error(error)
+      setuploadErr(error)
     }
    
   }
@@ -94,9 +105,9 @@ export function Adminproductdetail(props) {
       })
     );
   };
-  return !loading ? (
+  return !detailLoading ? (
     <>
-      <section className="form-container">{console.log(img)}
+      <section className="form-container">
         <header>
           <h2>Edit Info</h2>
         </header>
@@ -114,7 +125,7 @@ export function Adminproductdetail(props) {
               value={name || ""}
             ></input>
             <div className="image-edit">
-            <label htmlFor="img">Image (Paste url or upload):{uploading?"uploading...":""}</label>
+            <label htmlFor="img">Image (Paste url or upload):{uploading?"uploading...":uploadErr?`${uploadErr}`:""}</label>
             <input
               onChange={(e) => {
                 setimg(e.target.value);
@@ -147,14 +158,20 @@ export function Adminproductdetail(props) {
               value={brand || ""}
             />
             <label htmlFor="category">Category:</label>
-            <input
+            <select
               onChange={(e) => {
                 setcategory(e.target.value);
               }}
               id="category"
               name="category"
+              style={{ background: "#f1f0f0", minHeight: "37px" }}
               value={category || ""}
-            />
+            >
+              <option></option>
+              {categoryList.map((item) => (
+                <option value={`${item}`}>{item}</option>
+              ))}
+            </select>
             <label htmlFor="gender">Gender:</label>
             <select
               id="gender"
@@ -162,27 +179,13 @@ export function Adminproductdetail(props) {
               style={{ background: "#f1f0f0", minHeight: "37px" }}
               value={gender || ""}
               onChange={(e) => {
-                setgender(e.target.value);
-                console.log(gender)
+                setgender(e.target.value.toLowerCase());
               }}
             >
-              <option
-                value="male"
-                onClick={(e) => {
-                  setgender(e.target.value);
-                  console.log(gender)
-                }}
-              >
-                Male
-              </option>
-              <option
-                value="female"
-                onClick={(e) => {
-                  setgender(e.target.value);
-                }}
-              >
-                Female
-              </option>
+              <option></option>
+              {genderList.map((item) => (
+                <option value={`${item}`}>{item}</option>
+              ))}
             </select>
             <label htmlFor="stock">Count in Stock:</label>
             <input

@@ -39,10 +39,50 @@ export const createProduct = (product) => async (dispatch, getState) => {
     }
   };
 
-export const listProducts = (keyword='') => async (dispatch) => {
+  
+export const postproductReview = (review,productId) => async (dispatch, getState) => {
+
+    try {
+      
+      dispatch({ type: "PRODUCT_REVIEW_REQUEST" });
+      const { userInfo } = getState().userLogin;
+     
+      const { data } = await Axios.post(
+        `http://localhost:5000/api/products/${productId}/review`,
+        review
+        ,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${userInfo.token}`,
+          },
+        }
+      );
+      dispatch({
+        type: "PRODUCT_REVIEW_SUCCESS",
+      });
+     
+      dispatch({
+        type: "PRODUCT_REVIEW_RESET",
+      });
+  
+      
+    } catch (error) {
+      dispatch({
+        type: "PRODUCT_REVIEW_FAIL",
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+
+export const listProducts = (filter={},keyword='') => async (dispatch) => {
   try {
+  
     dispatch({ type: "PRODUCT_LIST_REQUEST" });
-    const { data } = await Axios.post(`http://localhost:5000/api/products?keyword=${keyword}`);
+    const { data } = await Axios.post(`http://localhost:5000/api/products?keyword=${keyword}`,filter);
    
     dispatch({
       type: "PRODUCT_LIST_SUCCESS",
@@ -88,12 +128,12 @@ export const productDetail = (id) => async (dispatch) => {
 };
 
 export const postproductUpdate = (product) => async (dispatch, getState) => {
-console.log(product)
+
   try {
     
     dispatch({ type: "PRODUCT_UPDATE_REQUEST" });
     const { userInfo } = getState().userLogin;
-    console.log(userInfo.token)
+
     const { data } = await Axios.post(
       `http://localhost:5000/api/products/updateproduct/${product.id}`,
       product

@@ -3,10 +3,7 @@ import "./App.css";
 import Navbar from "./component/navbar";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { Category } from "./component/category";
-import { Trending } from "./component/trending";
-import Services from "./component/services";
-import Footer from "./component/footer";
+
 import {BrowserRouter as Router,Route,Switch} from 'react-router-dom'
 import { Men } from "./pages/men";
 import { Cart } from "./pages/cart";
@@ -28,21 +25,13 @@ import { Adminproductlist } from "./pages/adminProductList";
 import { Adminproductdetail } from "./pages/adminProductDetail";
 import  AdminCreateProduct from "./pages/adminCreateProduct";
 import { SearchResult } from "./pages/searchResult";
+import { Accesories } from "./pages/accesories";
+import { Women } from "./pages/women";
+import { Footwear } from "./pages/footwear";
+import { Home } from "./pages/Home";
 AOS.init();
 
 function App() {
-
-  const Home = () => (
-   <>
-    <Category />
-
-    <Trending />
-
-    <Services />
-
-    <Footer />
-</>
-  )
 
   return (
     <div className="App">{console.log("localStorage",localStorage)}
@@ -51,6 +40,9 @@ function App() {
     <Switch>
       <Route path='/' exact component={Home} />
       <Route path='/men' component={Men}/>
+      <Route path='/women' component={Women}/>
+      <Route path='/footwear' component={Footwear}/>
+      <Route path='/accesories' component={Accesories}/>
       <Route path='/cart' component={Cart}/>
       <Route path='/productDetail/:id' component={Productdetail}/>
       <Route path='/logIn' component={Login}/>

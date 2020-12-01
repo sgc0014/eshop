@@ -13,6 +13,20 @@ export const productCreateReducer = (state = {},action) => {
 
   }
 }
+export const productReviewReducer = (state = {}, action) => {
+  switch (action.type) {
+    case "PRODUCT_REVIEW_REQUEST":
+      return { loading: true };
+    case "PRODUCT_REVIEW_SUCCESS":
+      return { loading: false,success:true };
+    case "PRODUCT_REVIEW_FAIL":
+      return { loading: false, error: action.payload };
+    case "PRODUCT_REVIEW_RESET":
+      return{}
+    default:
+      return state;
+  }
+};
 
 export const productListReducer = (state = {},action) => {
     switch(action.type){

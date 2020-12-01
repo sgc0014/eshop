@@ -29,9 +29,9 @@ const signUpController = asyncHandler(async (req, res) => {
 });
 const logInController = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-  console.log(req.body.email);
+ 
   const user = await User.findOne({ email });
-  console.log(req.body);
+ 
   if (user) {
     const authorized = await bcrypt.compare(password, user.password);
  

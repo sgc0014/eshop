@@ -26,27 +26,73 @@ const createProduct = asyncHandler(async (req, res) => {
     countInStock,
   });
 
-  res.status(201).json(newProduct)
+  res.status(201).json(newProduct);
+});
+
+const createRating = asyncHandler(async (req, res) => {
+  const { reviewComment, reviewNo } = req.body;
+  const { id } = req.params;
+
+  const product = await Product.findById(id);
+  if (product) {
+    const alreadyRated = product.reviews.find(
+      (r) => r.user.toString() === req.user._id.toString()
+    );
+    if (alreadyRated) {
+      res.status(400);
+      throw new Error("Product already rated");
+    }
+
+    const rating = {
+      reviewComment: reviewComment,
+      reviewNo: Number(reviewNo),
+      user: req.user._id,
+      name: req.user.name,
+    };
+
+    product.reviews.push(rating);
+    console.log(product);
+    console.log(rating);
+    product.ratingAvg =
+      product.reviews.reduce((a, b) => a + b.reviewNo, 0) /
+      product.reviews.length;
+    product.reviewsCount = product.reviews.length;
+    await product.save();
+    res.status(201).json({ msg: "review submitted" });
+  } else {
+    res.status(404);
+    throw new Error("No such product found");
+  }
 });
 
 const getProducts = asyncHandler(async (req, res) => {
   const { page = 1, limit = 10 } = req.query;
-  const keyword = req.query.keyword?{
-    name: new RegExp(req.query.keyword, 'i')
-  }: {}
-  
-  //sorting
+  const { category = {}, gender = {}, sort = {} } = req.body;
+  const keyword = req.query.keyword
+    ? {
+        name: new RegExp(req.query.keyword, "i"),
+      }
+    : {};
 
-  //filtering
+  const querycategory =
+    category.filterArr && category.filterArr.length > 0
+      ? { category: { $in: category.filterArr } }
+      : {};
+  const querygender =
+    gender.filterArr && gender.filterArr.length > 0
+      ? { gender: { $in: gender.filterArr } }
+      : {};
 
-  // const excludeQry = ["page","limit"];
-  // excludeQry.forEach(qry => delete query[qry])
-  // const queryStr = JSON.stringify(query)
+  const querysort = sort.item === "low" ? 1 : -1;
 
+  console.log("querycategory", querygender);
   const count = await Product.countDocuments();
 
-  const products = await Product.find({...keyword})
-    .sort({ price: -1 })
+  const products = await Product.find(
+    { ...querycategory, ...querygender },
+    { ...keyword }
+  )
+    .sort({ price: (sort.item && querysort) || 1 })
     .limit(limit * 1)
     .skip((page - 1) * limit)
     .exec();
@@ -57,7 +103,6 @@ const getProducts = asyncHandler(async (req, res) => {
     currentPage: page,
   });
 });
-
 
 const getProductDetails = asyncHandler(async (req, res) => {
   const id = req.params.id;
@@ -110,3 +155,4 @@ module.exports.getProductDetails = getProductDetails;
 module.exports.updateProduct = updateProduct;
 module.exports.deleteProduct = deleteProduct;
 module.exports.createProduct = createProduct;
+module.exports.createRating = createRating;

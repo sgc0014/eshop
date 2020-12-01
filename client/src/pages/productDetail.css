@@ -57,6 +57,47 @@
     background: #26a1b3;
 
 }
+.product-review-container{
+    max-width: 480px;
+}
+.review-select{
+    min-width: 169px;
+    padding: 2px;
+}
+.review-form{
+    display: flex;
+    flex-direction: column;
+   
+}
+.review-form>textarea,button{
+    margin-bottom: 14px;
+    height: 36px;
+    border-radius: 5px;
+    border: 1px solid #c7c7c7;
+
+}
+.review-submit{
+    background: #56cfe1;
+    color: #fff;
+    border: 1px #56cfe1;
+    height: 35px;
+    padding: 1px 20px;
+    margin: 6px 0;
+    cursor: pointer;
+    outline: none;
+}
+.error{
+    color: #e42d2d;
+    font-size: 13px;
+}
+.review-list{
+    display: flex;
+    flex-direction: column;
+}
+.user-review{
+    margin-bottom: 5px;
+    font-size: 14px;
+}
 
 @media screen and (max-width: 900px){
     .product-detail-container{

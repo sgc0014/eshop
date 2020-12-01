@@ -12,69 +12,40 @@ export function Men(props) {
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
   const { error, loading, products } = productList;
- 
-
-  useEffect(() => {
-    if (!products) {
-      dispatch(listProducts());
-    }
-  }, [dispatch,]);
 
   const [filterList, setFilterlist] = useState([
     {
       header: "category",
       options: ["Tshirt", "Shirt", "Jeans"],
     },
-    {
-      header: "Sort By",
-      options: ["High to Low", "Low to high"],
-    },
-    {
-      header: "Gender",
-      options: ["Male", "Female"],
-    },
   ]);
-  const [filter, setFilter] = useState({
-    category: "",
-    gender: "",
-    sort: "",
-  });
+  const [filter, setFilter] = useState({});
 
   const [dropdownState, setdropdownState] = useState(false);
+  const filterChange = (obj) => {
+    let finalFilter = { ...filter };
 
-  const selected = (option, header) => {
-    if (header.toLowerCase() === "category") {
-      if (filter.category === option) {
-        filter.category = "";
-      } else {
-        filter.category = option;
-      }
+    if (obj.header === "category") {
+      finalFilter.category = obj;
     }
 
-    if (header.toLowerCase() === "gender") {
-      if (filter.gender === option) {
-        filter.gender = "";
-      } else {
-        filter.gender = option;
-      }
-    }
-    filterChange();
+    finalFilter.gender = { header: "gender", filterArr: ["male"] };
+
+    setFilter(finalFilter);
+    dispatch(listProducts(finalFilter));
   };
-  const filterChange = () => {
-    // let filterredProduct = productList.filter(
-    //   (product) =>
-    //     filter.category.toLowerCase() === product.category.toLowerCase()
-    // );
-    // setproductList(filterredProduct);
-  };
-  return loading ? (
-    <h2>Loading...</h2>
-  ) : error ? (
+  useEffect(() => {
+    dispatch(
+      listProducts({ gender: { header: "gender", filterArr: ["male"] } })
+    );
+  }, []);
+
+  return error ? (
     <h2>{error}</h2>
   ) : (
     <section className="men-section">
       <div className="header">
-        <h2>Mens Clothing</h2>
+        <h2>Men Clothing</h2>
         <div className="category-header-line"></div>
       </div>
       <main className="men-body">
@@ -87,14 +58,25 @@ export function Men(props) {
                   key={i}
                   header={filter.header}
                   options={filter.options}
+                  filterChange={filterChange}
                 />
               ))}
             </main>
           </div>
         </div>
         <div className="right">
+          <select
+            onChange={(e) =>
+              filterChange({ header: "sort", item: e.target.value })
+            }
+          >
+            <option value="low">Low to High</option>
+            <option value="high">High to Low</option>
+          </select>
           <div className="products-container">
-            {products &&
+            {loading ? (
+              <h4 style={{ textAlign: "center" }}>Loading...</h4>
+            ) : products && products.products.length > 0 ? (
               products.products.map((product, i = product._id) => (
                 <Product
                   name={product.name}
@@ -103,7 +85,10 @@ export function Men(props) {
                   id={product._id}
                   key={i}
                 />
-              ))}
+              ))
+            ) : (
+              <h4 style={{ textAlign: "center" }}>No products found.</h4>
+            )}
           </div>
         </div>
       </main>

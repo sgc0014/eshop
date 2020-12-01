@@ -8,7 +8,7 @@ import { listProducts } from "../store/actions/productActions";
 import { useDispatch, useSelector } from "react-redux";
 
 
-export function Women(props) {
+export function Accesories(props) {
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
   const { error, loading, products } = productList;
@@ -16,7 +16,12 @@ export function Women(props) {
   const [filterList, setFilterlist] = useState([
     {
       header: "category",
-      options: ["Tshirt", "Shirt", "Jeans"],
+      options: ["Bags", "Mobile Cover"],
+    },
+
+    {
+      header: "gender",
+      options: ["Male", "Female"],
     },
   ]);
   const [filter, setFilter] = useState({});
@@ -28,15 +33,18 @@ export function Women(props) {
     if (obj.header === "category") {
       finalFilter.category = obj;
     }
-
-    finalFilter.gender = { header: "gender", filterArr: ["female"] };
+    if (obj.header === "gender") {
+      finalFilter.gender = obj;
+    }
 
     setFilter(finalFilter);
     dispatch(listProducts(finalFilter));
   };
   useEffect(() => {
     dispatch(
-      listProducts({ gender: { header: "gender", filterArr: ["female"] } })
+      listProducts({
+        category: { header: "category", filterArr: ["bags", "mobile cover"] },
+      })
     );
   }, []);
 
@@ -45,7 +53,7 @@ export function Women(props) {
   ) : (
     <section className="men-section">
       <div className="header">
-        <h2>Women Clothing</h2>
+        <h2>Accesories</h2>
         <div className="category-header-line"></div>
       </div>
       <main className="men-body">

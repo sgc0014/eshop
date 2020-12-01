@@ -1,48 +1,44 @@
 import Axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { listProducts } from "../store/actions/productActions";
 
 export function Dropdown(props) {
   const dispatch = useDispatch();
   const history = useHistory();
   const [dropdownState, setdropdownState] = useState(false);
-  const [selectedItem, setselectedItem] = useState({});
-  const { options, header } = props;
+  const [filterArr, setfilterArr] = useState([]);
+  const { options, header, filterChange } = props;
+  header.toLowerCase()
 
   const selected = async (e) => {
-    const item = e.target.value;
-    let obj = {};
-    obj[header.toLowerCase()] = item.toLowerCase();
-    setselectedItem(obj)
-   
-    console.log(selectedItem)
-    try {
-      dispatch({ type: "PRODUCT_LIST_REQUEST" });
-     
-      const { data } = await Axios.post(
-        `http://localhost:5000/api/products`,
-       obj
-      );
+    const item = e.target.value.toLowerCase();
+    let arr = [...filterArr];
+    
+    const index = arr
+      .map(function (e) {
+        return e;
+      })
+      .indexOf(item);
 
-      dispatch({
-        type: "PRODUCT_LIST_SUCCESS",
-        payload: data,
-      });
-    } catch (error) {
-      dispatch({
-        type: "PRODUCT_LIST_FAIL",
-        payload:
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
-      });
+    if (index !== -1) {
+      arr.splice(index, 1);
+      filterChange({ header, filterArr: arr });
+      
+    } else {
+     
+      arr = [...arr, item];
+      filterChange({ header, filterArr: arr });
+      
     }
+
+    setfilterArr([...arr])
   };
+
   return (
     <section className="filter-dropdown">
-  
       <header
         className="filter-option-header"
         onClick={() => {
@@ -69,13 +65,13 @@ export function Dropdown(props) {
       >
         {options.map((option, i) => (
           <li key={i} className="option">
-            <button
+            <input
               style={{ background: "none", border: "none" }}
               value={option}
+              type="checkbox"
               onClick={(e) => selected(e)}
-            >
-              {option}
-            </button>
+            />
+            <label> {option}</label>
           </li>
         ))}
       </ul>

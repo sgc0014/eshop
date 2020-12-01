@@ -10,7 +10,7 @@ import { userLogout } from "../store/actions/userAction";
 export default function Navbar(props) {
   const dispatch = useDispatch();
   const history = useHistory();
-  const {cartItems} = useSelector(state=> state.cart)
+  const { cartItems } = useSelector((state) => state.cart);
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   const [mobileNav, setmobileNav] = useState(false);
@@ -35,12 +35,11 @@ export default function Navbar(props) {
   });
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(searchTerm)
-    if(searchTerm){
-      history.push(`/search/${searchTerm}`)
+    console.log(searchTerm);
+    if (searchTerm) {
+      history.push(`/search/${searchTerm}`);
       setsearchTerm("");
     }
-    
   };
 
   return (
@@ -74,6 +73,10 @@ export default function Navbar(props) {
             {" "}
             <li className=" nav-item">Accesories</li>
           </Link>
+          <Link to="/footwear">
+            {" "}
+            <li className=" nav-item">Footwear</li>
+          </Link>
           <Link to="/contact">
             {" "}
             <li className=" nav-item">Contact</li>
@@ -91,12 +94,18 @@ export default function Navbar(props) {
             }}
           >
             <form onSubmit={handleSubmit}>
-            <input
-              placeholder="search..."
-              style={{ background: "#e8e8e8", border: "none", outline: "none" }}
-              onChange={(e) =>{setsearchTerm(e.target.value)}}
-            ></input>
-            <FiSearch size={"1.5em"} strokeWidth={"1"} type="submit" />
+              <input
+                placeholder="search..."
+                style={{
+                  background: "#e8e8e8",
+                  border: "none",
+                  outline: "none",
+                }}
+                onChange={(e) => {
+                  setsearchTerm(e.target.value);
+                }}
+              ></input>
+              <FiSearch size={"1.5em"} strokeWidth={"1"} type="submit" />
             </form>
           </li>
           {/* phone search */}
@@ -133,7 +142,6 @@ export default function Navbar(props) {
               }}
               value={searchTerm}
               onChange={(e) => {
-               
                 setsearchTerm(e.target.value);
               }}
             ></input>
@@ -162,15 +170,15 @@ export default function Navbar(props) {
                   </li>
                   {userInfo.isAdmin ? (
                     <>
-                    <li>
-                      <Link to="/userlist">User List</Link>
-                    </li>
-                    <li>
-                      <Link to="/admin/orderlist">Order List</Link>
-                    </li>
-                    <li>
-                      <Link to="/admin/productlist">Product List</Link>
-                    </li>
+                      <li>
+                        <Link to="/userlist">User List</Link>
+                      </li>
+                      <li>
+                        <Link to="/admin/orderlist">Order List</Link>
+                      </li>
+                      <li>
+                        <Link to="/admin/productlist">Product List</Link>
+                      </li>
                     </>
                   ) : (
                     ""
@@ -199,7 +207,9 @@ export default function Navbar(props) {
               <span className="responsive-icon">
                 <FiShoppingCart size={"1.5em"} strokeWidth={"1"} />
               </span>
-              <span className="count"><div>{cartItems.length}</div></span>
+              <span className="count">
+                <div>{cartItems.length}</div>
+              </span>
             </li>
           </Link>
         </ul>
@@ -225,11 +235,30 @@ export default function Navbar(props) {
               <Link to="signup">Sign Up</Link>
             </span>
           </li>
-          <li className="mobile-nav-item">Men</li>
-          <li className="mobile-nav-item">Women</li>
-          <li className="mobile-nav-item">Accesories</li>
-          <li className="mobile-nav-item">Contact</li>
-          <li className="mobile-nav-item">About Us</li>
+          <Link to="/men">
+            {" "}
+            <li className="mobile-nav-item">Men</li>
+          </Link>
+          <Link to="/women">
+            {" "}
+            <li className="mobile-nav-item">Women</li>
+          </Link>
+          <Link to="/accesories">
+            {" "}
+            <li className="mobile-nav-item">Accesories</li>
+          </Link>
+          <Link to="/footwear">
+            {" "}
+            <li className="mobile-nav-item">Footwear</li>
+          </Link>
+          <Link to="/contact">
+            {" "}
+            <li className="mobile-nav-item">Contact</li>
+          </Link>
+          <Link to="/about-us">
+            {" "}
+            <li className="mobile-nav-item">About Us</li>
+          </Link>
         </ul>
       </div>
     </>

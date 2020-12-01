@@ -9,11 +9,17 @@ const {
   updateProduct,
   deleteProduct,
   createProduct,
+  createRating
 } = productControllers;
 
 //@desc Get all product => /api/products/
 //@access Public
 Router.post("/", getProducts);
+
+//@desc Get all product => /api/products/:id/review
+//@access Public
+Router.post("/:id/review", verifyToken, createRating);
+
 
 //@desc Add product => /api/products/create
 //@access Admin

@@ -1,65 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { listProducts } from "../store/actions/productActions";
 import Product from "./product";
 export function Trending(props) {
-  const [productList, setproductList] = useState([
-    {
-      name: "full sleeve tshirt",
-      price: 500,
-      img: "mtshirt.jpg",
-      gender: "male",
-      category: "tshirt",
-     size:'xs'
-    },
-    {
-      name: "short sleeve tshirt",
-      price: 600,
-      img: "mtshirt1.jpg",
-      category: "tshirt",
-     size:'s'
-    },
-    {
-      name: " tshirt",
-      price: 300,
-      img: "mtshirt2.jpg",
-      category: "tshirt",
-     size:'m'
-    },
-    {
-      name: "full sleeve tshirt",
-      price: 500,
-      img: "mjeans.jpg",
-      category: "jeans",
-     size:'l'
-    },
-    {
-      name: "short sleeve tshirt",
-      price: 600,
-      img: "mjeans1.jpg",
-      category: "jeans",
-     size:'xl'
-    },
-    {
-      name: " tshirt",
-      price: 300,
-      img: "mshirt.jpg",
-      category: "shirt",
-     size:'xs'
-    },
-    {
-      name: "full sleeve tshirt",
-      price: 500,
-      img: "mshirt1.jpg",
-      category: "shirt",
-     size:'s'
-    },
-    {
-      name: "short sleeve tshirt",
-      price: 600,
-      img: "mshirt2.jpg",
-      category: "shirt",
-     size:'m'
-    },
-  ]);
+  const dispatch = useDispatch();
+  const productList = useSelector((state) => state.productList);
+  const { error, loading, products } = productList;
+
+  useEffect(() => {
+    dispatch(listProducts());
+  }, []);
+
   return (
     <section className="trending-container">
       <header className="section-header">
@@ -69,9 +20,21 @@ export function Trending(props) {
       </header>
 
       <div className="trending-body">
-        {productList.map(product=> (
-          <Product img={product.img} name={product.name} price={product.price} />
-        ))}
+        {loading ? (
+          <h4 style={{ textAlign: "center" }}>Loading...</h4>
+        ) : products && products.products.length > 0 ? (
+          products.products.map((product, i = product._id) => (
+            <Product
+              name={product.name}
+              price={product.price}
+              img={product.img}
+              id={product._id}
+              key={i}
+            />
+          ))
+        ) : (
+          <h4 style={{ textAlign: "center" }}>No products found.</h4>
+        )}
       </div>
       <div className="load-more-button-container">
         <button className="load-more-button">Load More</button>
